@@ -5,6 +5,7 @@ import SearchHistory from "./components/main/SearchHistory";
 import Banners from "./components/main/Banners";
 import HighFly from "./components/main/HighFly";
 import Accordion from "./components/main/Accordion";
+import Benefits from "./components/main/Benefits"
 import Footer from "./components/footer/Footer";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <HighFly />
         <Accordion />
       </div>
+      <Benefits />
       <Footer />
     </div>
   );

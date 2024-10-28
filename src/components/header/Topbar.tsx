@@ -20,7 +20,7 @@ const Topbar = () => {
                 <li>
                   <a
                     href="#"
-                    className="block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-blue-700"
+                    className="block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-primary"
                     aria-current="page"
                   >
                     صفحه اصلی
@@ -29,7 +29,7 @@ const Topbar = () => {
                 <li>
                   <a
                     href="#"
-                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0"
                   >
                     بیمه مسافرتی
                   </a>
@@ -37,7 +37,7 @@ const Topbar = () => {
                 <li>
                   <a
                     href="#"
-                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0"
                   >
                     سفرهای من
                   </a>
@@ -51,7 +51,7 @@ const Topbar = () => {
                         onMouseEnter={() => setIsOpen(true)}
                         onMouseLeave={() => setIsOpen(false)}
                       >
-                        <a href="" className="md:hover:text-blue-700">سایر موارد</a>
+                        <a href="" className="md:hover:text-primary">سایر موارد</a>
                         <svg
                           className="inline w-5 h-5 transform transition-transform duration-200"
                           xmlns="http://www.w3.org/2000/svg"
@@ -68,9 +68,11 @@ const Topbar = () => {
                         </svg>
                         {isOpen && (
                           <ul className="absolute right-0 w-48 bg-white shadow-lg">
-                            <li className="p-2 hover:bg-gray-200">اکانت شما</li>
                             <li className="p-2 hover:bg-gray-200">
-                              علاقه مندی ها
+                              <a href="">اکانت شما</a>
+                              </li>
+                            <li className="p-2 hover:bg-gray-200">
+                              <a href="">علاقه مندی ها</a>
                             </li>
                           </ul>
                         )}
@@ -146,7 +148,11 @@ const Topbar = () => {
             </div>
           </div>
         </nav>
-        <div className="w-100">
+        <div className="text-right w-100">
+          <p className="text-white text-3xl font-bold tracking-wider leading-[4rem] absolute top-32 right-24">راحتی و سرعت در
+            <br />
+            رزرو بلیط هواپیما با بیلتو
+          </p>
           <img src={banner} className="w-full" alt="" />
         </div>
       </header>

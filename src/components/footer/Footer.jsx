@@ -19,30 +19,35 @@ import tweet from "../../assets/images/Social media icons (4).svg";
 const Footer = () => {
   return (
     <>
-      <div className="container mx-auto my-5 flex flex-col gap-4">
-        <div className="flex gap-4 text-right">
-          <div className="w-4/6 flex flex-col">
+      <div className="container mx-auto p-5 flex flex-col gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-6 text-right">
+          <div className="hidden md:block md:col-span-4 md:order-1">
+            {" "}
             <h2 className="text-lg font-bold leading-10">اپلیکیشن بیلیتو</h2>
             <p className="text-md">
               با نصب اپلیکیشن بیلیتو راحتی و سرعت در رزرو بلیط هواپیما را داشته
               باشید
             </p>
           </div>
-          <div className="w-2/6 flex justify-start gap-4 items-center">
-            <img src={playStore} alt="Play Store" className="w-full*" />
-            <img src={appStore} alt="App Store" className="w-full*" />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 text-right">
-          <div className="w-4/6 flex flex-col items-start">
-            <img src={Logo} alt="Website Logo" className="h-8" />
+
+          <div className="col-span-1 md:col-span-4 md:order-3">
+            <img
+              src={Logo}
+              alt="Website Logo"
+              className="h-8 hidden md:block"
+            />
             <p className="text-md leading-10">تلفن پشتیبانی: 98 76 54 32_021</p>
             <p className="text-md">
               آدرس دفتر مرکزی: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون،
               طوس غربی.
             </p>
           </div>
-          <div className="w-2/6 flex flex-col gap-2">
+
+          <div className="col-span-1 md:hidden">
+            <img src={Logo} alt="Website Logo" className="h-8" />
+          </div>
+
+          <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
               <li>
@@ -62,9 +67,51 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
+          <div className="col-span-1 md:col-span-2 md:order-2 flex flex-col md:flex-row gap-2">
+            {" "}
+            <img
+              src={playStore}
+              alt="Play Store"
+              className="w-[182px] h-[66px] w-full*"
+            />
+            <img
+              src={appStore}
+              alt="App Store"
+              className="w-[182px] h-[66px] w-full*"
+            />
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-          <div className="flex flex-col text-right pr-10 gap-2">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 mt-4">
+          <div className="md:order-2 flex justify-center md:justify-end items-center gap-4">
+            <img
+              src={link4}
+              alt="اینماد"
+              className="bg-white shadow-md w-full*"
+            />
+            <img
+              src={link1}
+              alt="اینماد"
+              className="bg-white shadow-md w-full*"
+            />
+            <img
+              src={link5}
+              alt="اینماد"
+              className="bg-white shadow-md w-full*"
+            />
+            <img
+              src={link3}
+              alt="اینماد"
+              className="bg-white shadow-md w-full*"
+            />
+            <img
+              src={link2}
+              alt="اینماد"
+              className="bg-white shadow-md w-full*"
+            />
+          </div>
+          <div className="md:order-1 flex items-center flex-col text-right pr-10 gap-2">
             <ul className="flex list-none gap-4">
               <li>
                 <a href="#">
@@ -100,33 +147,6 @@ const Footer = () => {
             <a href="" className="text-primary font-bold">
               kazemifk484@gmail.com
             </a>
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            <img
-              src={link4}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link1}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link5}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link3}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link2}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
           </div>
         </div>
       </div>

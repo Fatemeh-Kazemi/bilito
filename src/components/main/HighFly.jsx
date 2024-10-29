@@ -3,7 +3,7 @@ import destination2 from "../../assets/images/1-2.png";
 import destination3 from "../../assets/images/3-3.png";
 import destination4 from "../../assets/images/4-4.png";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const flightsData = [
   {
@@ -38,12 +38,18 @@ const flightsData = [
 
 const HighFly = () => {
   const [flights, setFlights] = useState([]);
+  const [activeCity, setActiveCity] = useState("تهران"); // Set default active city
+
+  useEffect(() => {
+    handleCityClick(activeCity); // Load flights for the default city on mount
+  }, [activeCity]);
 
   const handleCityClick = (city) => {
     const filteredFlights = flightsData.filter(
       (flight) => flight.from === city || flight.to === city
     );
     setFlights(filteredFlights);
+    setActiveCity(city); // Update active city
   };
 
   return (
@@ -53,17 +59,19 @@ const HighFly = () => {
           <button
             key={city}
             onClick={() => handleCityClick(city)}
-            className="hover:bg-blue-200 hover:text-primary hover:border-none py-1 px-4 border rounded"
+            className={`py-1 px-4 border rounded ${
+              activeCity === city ? "bg-blue-500 text-white" : "hover:bg-blue-200 hover:text-primary"
+            }`}
           >
             {city}
           </button>
         ))}
       </div>
 
-      <div className="flex gap-4 text-center">
+      <div className="flex flex-wrap gap-4 text-center">
         {flights.map((flight) => (
           <div key={flight.id} className="flex border rounded-md overflow-hidden">
-            <div style={{width: "80px", height: "82px"}}>
+            <div style={{ width: "80px", height: "82px" }}>
               <img
                 src={flight.image}
                 alt={`${flight.from} to ${flight.to}`}
@@ -71,7 +79,7 @@ const HighFly = () => {
               />
             </div>
             <div className="w-3/4 flex flex-col justify-between p-2 text-center">
-              <div className="flex items-center">
+              <div className="flex items-center justify-center">
                 <span>{flight.from}</span>
                 <svg
                   width="25"
@@ -88,7 +96,8 @@ const HighFly = () => {
 
                 <span>{flight.to}</span>
               </div>
-              <div className="border-t-2">
+              <hr />
+              <div>
                 <span>{flight.price}</span>
               </div>
             </div>

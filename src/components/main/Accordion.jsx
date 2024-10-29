@@ -48,7 +48,7 @@ const Accordion = () => {
   };
 
   return (
-    <>
+    <div className="container mx-auto px-4 md:px-0">
       <p className="text-2xl text-right font-bold text-gray-500">
         سوالات متداول
       </p>
@@ -59,7 +59,7 @@ const Accordion = () => {
               className="flex justify-between items-center w-full p-4 text-left text-gray-700 bg-white hover:bg-gray-100 focus:outline-none"
               onClick={() => toggleAccordion(index)}
             >
-              <span>{x.question}</span>
+              <span className="text-right">{x.question}</span>
               <svg
                 className={`w-5 h-5 transform transition-transform duration-200 ${
                   openIndex === index ? "rotate-180" : ""
@@ -85,7 +85,7 @@ const Accordion = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

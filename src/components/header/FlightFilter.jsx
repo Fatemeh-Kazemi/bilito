@@ -38,17 +38,17 @@ const FlightFilter = () => {
         </ul>
       </div>
       <div className="flex gap-4 mb-4">
-        <button className="border border-primary rounded-lg px-4 py-2 hover:bg-primary hover:text-white">
+        <button className="h-[32px] w-[110px] md:h-[40px] p-2 leading-[20px] border border-primary rounded-lg text-center hover:bg-primary hover:text-white">
           رفت
         </button>
-        <button className="border border-primary rounded-lg px-4 py-2 hover:bg-primary hover:text-white">
+        <button className="h-[32px] w-[110px] md:h-[40px] p-2 leading-[20px] border border-primary rounded-lg text-center hover:bg-primary hover:text-white">
           رفت و برگشت
         </button>
-        <button className="border border-primary rounded-lg px-4 py-2 hover:bg-primary hover:text-white">
+        <button className="h-[32px] w-[110px] md:h-[40px] p-2 leading-[20px] border border-primary rounded-lg text-center hover:bg-primary hover:text-white">
           چند مسیره
         </button>
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <input
           className="placeholder-black-5 border border-gray-300 p-2 w-full rounded-lg"
           placeholder="مبدا"

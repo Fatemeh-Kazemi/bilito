@@ -4,6 +4,20 @@ import banner from "../../assets/images/mainBanner.png";
 import React, { useState } from "react";
 import Register from "./Register";
 
+const footerMenu = [
+  { title: "صفحه اصلی", link: "#", children: [] },
+  { title: "بیمه مسافرتی", link: "#", children: [] },
+  { title: "سفرهای من", link: "#", children: [] },
+  {
+    title: "سایر موارد",
+    link: "#",
+    children: [
+      { title: "اکانت شما", link: "#", children: [] },
+      { title: "علاقه مندی ها", link: "#", children: [] },
+    ],
+  },
+];
+
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -12,75 +26,64 @@ const Topbar = () => {
         <nav className="sticky bg-white w-full z-20 top-0 start-0">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <img src={logo} className="w-full*" alt="Bilito Logo" />
-            
+
             <div
               className="items-center justify-between hidden w-full md:flex md:w-auto"
               id="navbar-sticky"
             >
               <ul className="flex items-center flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 gap-6 md:flex-row md:mt-0 md:border-0 md:bg-white">
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-primary"
-                    aria-current="page"
-                  >
-                    صفحه اصلی
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0"
-                  >
-                    بیمه مسافرتی
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0"
-                  >
-                    سفرهای من
-                  </a>
-                </li>
-
-                <li>
-                  <div className="relative">
-                    <ul className="list-none">
-                      <li
-                        className="cursor-pointer"
-                        onMouseEnter={() => setIsOpen(true)}
-                        onMouseLeave={() => setIsOpen(false)}
+                {footerMenu.map((item) =>
+                  item.children.length < 1 ? (
+                    <li>
+                      <a
+                        href={item.link}
+                        className="block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-primary"
+                        aria-current="page"
                       >
-                        <a href="" className="md:hover:text-primary">سایر موارد</a>
-                        <svg
-                          className="inline w-5 h-5 transform transition-transform duration-200"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 15l-3-3h6l-3 3z"
-                          />
-                        </svg>
-                        {isOpen && (
-                          <ul className="absolute right-0 w-48 bg-white shadow-lg">
-                            <li className="p-2 hover:bg-gray-200">
-                              <a href="">اکانت شما</a>
-                              </li>
-                            <li className="p-2 hover:bg-gray-200">
-                              <a href="">علاقه مندی ها</a>
-                            </li>
-                          </ul>
-                        )}
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+                        {item.title}
+                      </a>
+                    </li>
+                  ) : (
+                    <li>
+                      <div className="relative">
+                        <ul className="list-none">
+                          <li
+                            className="cursor-pointer"
+                            onMouseEnter={() => setIsOpen(true)}
+                            onMouseLeave={() => setIsOpen(false)}
+                          >
+                            <a href="" className="md:hover:text-primary">
+                              {item.title}
+                            </a>
+                            <svg
+                              className="inline w-5 h-5 transform transition-transform duration-200"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 15l-3-3h6l-3 3z"
+                              />
+                            </svg>
+                            {isOpen && (
+                              <ul className="absolute right-0 w-48 bg-white shadow-lg">
+                                {item.children.map((inItem) => (
+                                  <li className="p-2 hover:bg-gray-200">
+                                    <a href={inItem.link}>{inItem.title}</a>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
             <div className="flex items-center gap-2 ">
@@ -100,7 +103,7 @@ const Topbar = () => {
                   fill="#606060"
                 />
               </svg>
-              
+
               <Register logo={logo} />
 
               <button
@@ -131,7 +134,8 @@ const Topbar = () => {
           </div>
         </nav>
         <div className="text-right w-100">
-          <p className="text-white md:text-3xl font-bold md:tracking-wider md:leading-[4rem] absolute top-44 right-16 md:top-32 md:right-24">راحتی و سرعت در
+          <p className="text-white md:text-3xl font-bold md:tracking-wider md:leading-[4rem] absolute top-44 right-16 md:top-32 md:right-24">
+            راحتی و سرعت در
             <br />
             رزرو بلیط هواپیما با بیلتو
           </p>

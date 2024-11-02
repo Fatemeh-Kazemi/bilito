@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import { Virtual } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/virtual";
+// Create array with 1000 slides
+const slides = Array.from({ length: 1000 }).map(
+  (el, index) => `Slide ${index + 1}`
+);
 
 const SearchHistory = () => {
   const [buttons, setButtons] = useState([
@@ -9,6 +19,9 @@ const SearchHistory = () => {
     { id: 5, text: "شیراز به تهران" },
     { id: 6, text: "شیراز به اصفهان" },
     { id: 7, text: "اصفهان به مشهد" },
+    { id: 8, text: "گلستان به خراسان" },
+    { id: 9, text: "تهران به میلان" },
+    { id: 10, text: "مشهد به قم" },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const nextButton = () => {
@@ -58,28 +71,49 @@ const SearchHistory = () => {
         </p>
         <p className="text-left text-primary">پاک کردن همه</p>
       </div>
-      <div className="flex items-stretch justify-between max-w-full gap-4">
-        <button onClick={prevButton} className="p-4 border rounded-r">
+      <div className="flex items-stretch justify-between gap-4 cursor-pointer">
+        <button
+          onClick={prevButton}
+          className="hidden md:block p-2 border rounded-r"
+        >
           &#9654;
         </button>
-        <div className="w-full flex justify-between px-4">
-          {buttons.map((button, index) => (
-            <div
-              key={button.id}
-              className={`p-4 border rounded ${
-                index === currentIndex
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-black"
-              }`}
-            >
-              <button onClick={() => removeButton(button.id)} className="px-2">
-                ✖
-              </button>
-              {button.text}
-            </div>
-          ))}
+        <div className="w-[90%] flex justify-between px-2">
+          <Swiper
+            modules={[Virtual]}
+            spaceBetween={5}
+            slidesPerView={2} // Default for mobile
+            breakpoints={{
+              640: {
+                slidesPerView: 6, // For desktop
+              },
+            }}
+            virtual
+          >
+            {buttons.map((button, index) => (
+              <SwiperSlide
+                key={button.id}
+                className={`p-2 border rounded ${
+                  index === currentIndex
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-black"
+                }`}
+              >
+                <button
+                  onClick={() => removeButton(button.id)}
+                  className="px-2"
+                >
+                  ✖
+                </button>
+                {button.text}
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-        <button onClick={nextButton} className="p-4 border rounded-l">
+        <button
+          onClick={nextButton}
+          className="hidden md:block p-2 border rounded-l"
+        >
           &#9664;
         </button>
       </div>

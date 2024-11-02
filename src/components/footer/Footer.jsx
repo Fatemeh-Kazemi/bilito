@@ -1,6 +1,3 @@
-import playStore from "../../assets/images/playstore.png";
-import appStore from "../../assets/images/appstore.png";
-
 import Logo from "../../assets/images/LOGO.svg";
 
 import link1 from "../../assets/images/foot (6).svg";
@@ -16,7 +13,38 @@ import ins from "../../assets/images/Social media icons (3).svg";
 import facebook from "../../assets/images/_Facebook.svg";
 import tweet from "../../assets/images/Social media icons (4).svg";
 
+const socialLinks = [
+  { img: tel, alt: "telegram link" },
+  { img: linkdin, alt: "telegram link" },
+  { img: yout, alt: "youtube link" },
+  { img: ins, alt: "instagram link" },
+  { img: facebook, alt: "facebook link" },
+  { img: tweet, alt: "tweeter link" },
+];
+const trustLinks = [
+  { img: link4, alt: "link" },
+  { img: link1, alt: "link" },
+  { img: link5, alt: "link" },
+  { img: link3, alt: "link" },
+  { img: link2, alt: "link" },
+];
+
+const footerMenu = [
+  { title: "درباره ما", link: "#" },
+  { title: "تماس با ما", link: "#" },
+  { title: "استرداد بلیط", link: "#" },
+  { title: "راهنمای خرید بلیط", link: "#" },
+  { title: "قوانین و مقررات", link: "#" },
+];
+
 const Footer = () => {
+  function goToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <>
       <div className="container mx-auto p-5 flex flex-col gap-4">
@@ -50,33 +78,23 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              <li>
-                <a href="#">درباره ما</a>
-              </li>
-              <li>
-                <a href="#">تماس با ما</a>
-              </li>
-              <li>
-                <a href="#">استرداد بلیط</a>
-              </li>
-              <li>
-                <a href="#">راهنمای خرید بلیط</a>
-              </li>
-              <li>
-                <a href="#">قوانین و مقررات</a>
-              </li>
+              {footerMenu.map((item) => (
+                <li className="hover:text-primary">
+                  <a href={item.link}>{item.title}</a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="col-span-1 md:col-span-2 md:order-2 flex flex-col md:flex-row gap-2">
             {" "}
             <img
-              src={playStore}
+              src={require("../../assets/images/playstore.png")}
               alt="Play Store"
               className="w-[182px] h-[66px] w-full*"
             />
             <img
-              src={appStore}
+              src={require("../../assets/images/appstore.png")}
               alt="App Store"
               className="w-[182px] h-[66px] w-full*"
             />
@@ -85,64 +103,27 @@ const Footer = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 mt-4">
           <div className="md:order-2 flex justify-center md:justify-end items-center gap-4">
-            <img
-              src={link4}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link1}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link5}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link3}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
-            <img
-              src={link2}
-              alt="اینماد"
-              className="bg-white shadow-md w-full*"
-            />
+            {trustLinks.map((eachItem) => (
+              <img
+                src={eachItem.img}
+                alt={eachItem.alt}
+                className="bg-white shadow-md w-full*"
+              />
+            ))}
           </div>
           <div className="md:order-1 flex items-center flex-col text-right pr-10 gap-2">
             <ul className="flex list-none gap-4">
-              <li>
-                <a href="#">
-                  <img src={tel} className="w-full" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src={linkdin} className="w-full" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src={yout} className="w-full" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src={ins} className="w-full" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src={facebook} className="w-full" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src={tweet} className="w-full" alt="" />
-                </a>
-              </li>
+              {socialLinks.map((eachItem) => (
+                <li>
+                  <a href="#">
+                    <img
+                      src={eachItem.img}
+                      className="w-full"
+                      alt={eachItem.alt}
+                    />
+                  </a>
+                </li>
+              ))}
             </ul>
             <a href="" className="text-primary font-bold">
               kazemifk484@gmail.com
@@ -151,7 +132,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="w-100 text-center py-8 border-t-2">
-        <a href="#">
+        <p onClick={goToTop}>
           <svg
             width="24"
             height="24"
@@ -169,7 +150,7 @@ const Footer = () => {
             />
           </svg>
           <span className="block text-center">بازگشت به بالا</span>
-        </a>
+        </p>
       </div>
     </>
   );

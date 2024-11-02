@@ -16,7 +16,7 @@ function App() {
         <SearchHistory />
         <Banners />
         <HighFly />
-        <Accordion />
+        <Accordion /> 
       </div>
       <Benefits />
       <Footer />

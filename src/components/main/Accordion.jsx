@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 const questions = [
   {
     question: "در هر پرواز میزان بار مجاز چقدر است؟",
@@ -42,6 +44,25 @@ const questions = [
 ];
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/questions', {
+          headers:{
+            'Access-Control-Allow-Origin':'*'
+          }
+        });
+        console.log(response)
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);

@@ -5,10 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
-// Create array with 1000 slides
-const slides = Array.from({ length: 1000 }).map(
-  (el, index) => `Slide ${index + 1}`
-);
 
 const SearchHistory = () => {
   const [buttons, setButtons] = useState([
@@ -24,6 +20,7 @@ const SearchHistory = () => {
     { id: 10, text: "مشهد به قم" },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  
   const nextButton = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % buttons.length);
   };

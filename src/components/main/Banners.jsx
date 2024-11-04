@@ -1,32 +1,47 @@
-import banner1 from "../../assets/images/1.png";
-import banner2 from "../../assets/images/2.png";
-import banner3 from "../../assets/images/3.png";
-import banner4 from "../../assets/images/4.png";
+import { Virtual } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/virtual";
 
 const Banners = () => {
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="relative">
-        <img src={banner1} alt="" className="w-full h-auto rounded brightness-x50" />
+    <>
+    <style>{` .swiper-slide {justify-content: center;}`}</style>
+    <div className="w-[100%] flex">
+      <Swiper
+            modules={[Virtual]}
+            spaceBetween={20}
+            slidesPerView={2} // Default for mobile
+            breakpoints={{
+              640: {
+                slidesPerView: 3, // For desktop
+              },
+            }}
+            virtual
+          >
+      <SwiperSlide className="relative">
+        <img src={require("../../assets/images/1.png")} alt="" className="w-full h-auto rounded brightness-x50" />
         <div className="text-right absolute bottom-0 right-0 p-4">
           <p className="text-xl font-bold text-white mb-1">بهترین فصل شنا</p>
           <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
             خرید بلیط پروازهای کیش
           </button>
         </div>
-      </div>
-      <div className="relative">
-        <img src={banner2} alt="" className="w-full h-auto rounded brightness-50" />
+      </SwiperSlide>
+      <SwiperSlide className="relative">
+        <img src={require("../../assets/images/2.png")} alt="" className="w-full h-auto rounded brightness-50" />
         <div className="text-right absolute bottom-0 right-0 p-4">
           <p className="text-xl font-bold text-white mb-1">سفر به ترکیه</p>
           <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
             خرید بلیط پروازهای ترکیه
           </button>
         </div>
-      </div>
-      <div className="flex flex-col justify-between">
+      </SwiperSlide>
+      <SwiperSlide className="flex flex-col justify-between">
         <div className="relative">
-          <img src={banner4} alt="" className="w-full h-auto rounded brightness-50" />
+          <img src={require("../../assets/images/4.png")} alt="" className="w-full h-auto rounded brightness-50" />
           <div className="text-right absolute bottom-0 right-0 p-4">
             <p className="text-xl font-bold text-white mb-1">
               {" "}
@@ -38,7 +53,7 @@ const Banners = () => {
           </div>
         </div>
         <div className="relative">
-          <img src={banner3} alt="" className="w-full h-auto rounded brightness-50" />
+          <img src={require("../../assets/images/3.png")} alt="" className="w-full h-auto rounded brightness-50" />
           <div className="text-right absolute bottom-0 right-0 p-4">
             <p className="text-xl font-bold text-white mb-1"> شگفتی در صحرا</p>
             <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
@@ -46,8 +61,10 @@ const Banners = () => {
             </button>
           </div>
         </div>
-      </div>
+      </SwiperSlide>
+      </Swiper>
     </div>
+    </>
   );
 };
 

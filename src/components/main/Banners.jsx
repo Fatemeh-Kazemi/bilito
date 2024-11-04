@@ -39,7 +39,7 @@ const Banners = () => {
           </button>
         </div>
       </SwiperSlide>
-      <SwiperSlide className="flex flex-col justify-between">
+      <SwiperSlide className="flex flex-col !justify-between">
         <div className="relative">
           <img src={require("../../assets/images/4.png")} alt="" className="w-full h-auto rounded brightness-50" />
           <div className="text-right absolute bottom-0 right-0 p-4">

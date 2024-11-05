@@ -17,7 +17,7 @@ const Register = ({ logo }) => {
     setIsChecked(!isChecked);
   };
 
-  const isButtonDisabled = phoneNumber === "" || !isChecked;
+  const isButtonDisabled = (phoneNumber === "") || !isChecked;
 
   return (
     <div className="relative">

@@ -1,43 +1,64 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 import Logo from "../../assets/images/LOGO.svg";
 
-import link1 from "../../assets/images/foot (6).svg";
-import link2 from "../../assets/images/foot (2).svg";
-import link3 from "../../assets/images/foot (3).svg";
-import link4 from "../../assets/images/foot (4).svg";
-import link5 from "../../assets/images/foot (5).svg";
-
-import tel from "../../assets/images/Social media icons.svg";
-import linkdin from "../../assets/images/Social media icons (1).svg";
-import yout from "../../assets/images/Social media icons (2).svg";
-import ins from "../../assets/images/Social media icons (3).svg";
-import facebook from "../../assets/images/_Facebook.svg";
-import tweet from "../../assets/images/Social media icons (4).svg";
-
-const socialLinks = [
-  { img: tel, alt: "telegram link" },
-  { img: linkdin, alt: "telegram link" },
-  { img: yout, alt: "youtube link" },
-  { img: ins, alt: "instagram link" },
-  { img: facebook, alt: "facebook link" },
-  { img: tweet, alt: "tweeter link" },
-];
-const trustLinks = [
-  { img: link4, alt: "link" },
-  { img: link1, alt: "link" },
-  { img: link5, alt: "link" },
-  { img: link3, alt: "link" },
-  { img: link2, alt: "link" },
-];
-
-const footerMenu = [
-  { title: "درباره ما", link: "#" },
-  { title: "تماس با ما", link: "#" },
-  { title: "استرداد بلیط", link: "#" },
-  { title: "راهنمای خرید بلیط", link: "#" },
-  { title: "قوانین و مقررات", link: "#" },
-];
-
 const Footer = () => {
+  const [menu, setMenu] = useState([]);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [trustLinks, setTrustlLinks] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/footerMenu"
+        );
+        setMenu(response.data.results);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchMenu();
+  }, []);
+
+  useEffect(() => {
+    const fetchSocialLinks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/socialLinks"
+        );
+        setSocialLinks(response.data.results);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchSocialLinks();
+  }, []);
+
+  useEffect(() => {
+    const fetchTrustLinks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/trustLinks"
+        );
+        setTrustlLinks(response.data.results);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchTrustLinks();
+  }, []);
+
+  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
+
   function goToTop() {
     window.scrollTo({
       top: 0,
@@ -78,7 +99,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              {footerMenu.map((item) => (
+              {menu.map((item) => (
                 <li className="hover:text-primary">
                   <a href={item.link}>{item.title}</a>
                 </li>
@@ -105,7 +126,7 @@ const Footer = () => {
           <div className="md:order-2 flex justify-center md:justify-end items-center gap-4">
             {trustLinks.map((eachItem) => (
               <img
-                src={eachItem.img}
+                src={`http://localhost:3001/${eachItem.img}`}
                 alt={eachItem.alt}
                 className="bg-white shadow-md w-full*"
               />
@@ -117,7 +138,7 @@ const Footer = () => {
                 <li>
                   <a href="#">
                     <img
-                      src={eachItem.img}
+                      src={`http://localhost:3001/${eachItem.img}`}
                       className="w-full"
                       alt={eachItem.alt}
                     />

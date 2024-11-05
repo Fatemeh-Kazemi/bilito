@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -6,64 +9,77 @@ import "swiper/css";
 import "swiper/css/virtual";
 
 const Banners = () => {
+  const [banners, setBanners] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/banners");
+        setBanners(response.data.results);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
+  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
   return (
     <>
-    <style>{` .swiper-slide {justify-content: center;}`}</style>
-    <div className="w-[100%] flex">
-      <Swiper
-            modules={[Virtual]}
-            spaceBetween={20}
-            slidesPerView={2} // Default for mobile
-            breakpoints={{
-              640: {
-                slidesPerView: 3, // For desktop
-              },
-            }}
-            virtual
-          >
-      <SwiperSlide className="relative">
-        <img src={require("../../assets/images/1.png")} alt="" className="w-full h-auto rounded brightness-x50" />
-        <div className="text-right absolute bottom-0 right-0 p-4">
-          <p className="text-xl font-bold text-white mb-1">بهترین فصل شنا</p>
-          <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
-            خرید بلیط پروازهای کیش
-          </button>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className="relative">
-        <img src={require("../../assets/images/2.png")} alt="" className="w-full h-auto rounded brightness-50" />
-        <div className="text-right absolute bottom-0 right-0 p-4">
-          <p className="text-xl font-bold text-white mb-1">سفر به ترکیه</p>
-          <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
-            خرید بلیط پروازهای ترکیه
-          </button>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className="flex flex-col !justify-between">
-        <div className="relative">
-          <img src={require("../../assets/images/4.png")} alt="" className="w-full h-auto rounded brightness-50" />
-          <div className="text-right absolute bottom-0 right-0 p-4">
-            <p className="text-xl font-bold text-white mb-1">
-              {" "}
-              دنیایی از تاریخ و هنر
-            </p>
-            <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
-              خرید بلیط پروازهای شیراز
-            </button>
-          </div>
-        </div>
-        <div className="relative">
-          <img src={require("../../assets/images/3.png")} alt="" className="w-full h-auto rounded brightness-50" />
-          <div className="text-right absolute bottom-0 right-0 p-4">
-            <p className="text-xl font-bold text-white mb-1"> شگفتی در صحرا</p>
-            <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
-              خرید بلیط پروازهای دبی
-            </button>
-          </div>
-        </div>
-      </SwiperSlide>
-      </Swiper>
-    </div>
+      <style>{` .swiper-slide {justify-content: center;}`}</style>
+      <div className="w-[100%] flex">
+        <Swiper
+          modules={[Virtual]}
+          spaceBetween={20}
+          slidesPerView={2} // Default for mobile
+          breakpoints={{
+            640: {
+              slidesPerView: 3, // For desktop
+            },
+          }}
+          virtual
+        >
+          {banners.slice(0, 2).map((banner) => (
+            <SwiperSlide className="relative">
+              <img
+                src={`http://localhost:3001/${banner.img}`}
+                alt=""
+                className="w-full h-auto rounded brightness-x50"
+              />
+              <div className="text-right absolute bottom-0 right-0 p-4">
+                <p className="text-xl font-bold text-white mb-1">
+                  {banner.title}
+                </p>
+                <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
+                  {banner.btnText}
+                </button>
+              </div>
+            </SwiperSlide>
+          ))}
+          <SwiperSlide className="flex flex-col !justify-between">
+            {banners.slice(2, 4).map((banner) => (
+              <div className="flex flex-col relative">
+                <img
+                  src={`http://localhost:3001/${banner.img}`}
+                  alt=""
+                  className="w-full h-auto rounded brightness-x50"
+                />
+                <div className="text-right absolute bottom-0 right-0 p-4">
+                  <p className="text-xl font-bold text-white mb-1">
+                    {banner.title}
+                  </p>
+                  <button className="border border-white text-white hover:bg-gray-1 hover:text-[#000] px-4 py-2 rounded">
+                    {banner.btnText}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </>
   );
 };

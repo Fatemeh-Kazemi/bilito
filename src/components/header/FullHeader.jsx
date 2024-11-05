@@ -1,4 +1,4 @@
-import Topbar from "./Topbar.tsx";
+import Topbar from "./Topbar";
 import FlightFilter from "./FlightFilter";
 
 const FullHeader = () => {

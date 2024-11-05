@@ -1,61 +1,38 @@
-import destination1 from "../../assets/images/1-1.png";
-import destination2 from "../../assets/images/1-2.png";
-import destination3 from "../../assets/images/3-3.png";
-import destination4 from "../../assets/images/4-4.png";
-
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
-import React, { useState, useEffect } from "react";
-
-const flightsData = [
-  {
-    id: 1,
-    from: "تهران",
-    to: "مشهد",
-    price: "1,200,000 تومان",
-    image: destination1,
-  },
-  {
-    id: 2,
-    from: "تهران",
-    to: "شیراز",
-    price: "1,500,000 تومان",
-    image: destination2,
-  },
-  {
-    id: 3,
-    from: "تهران",
-    to: "کیش",
-    price: "2,000,000 تومان",
-    image: destination3,
-  },
-  {
-    id: 4,
-    from: "مشهد",
-    to: "شیراز",
-    price: "1,300,000 تومان",
-    image: destination4,
-  },
-];
 
 const HighFly = () => {
   const [flights, setFlights] = useState([]);
   const [activeCity, setActiveCity] = useState("تهران"); // Set default active city
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    handleCityClick(activeCity); // Load flights for the default city on mount
-  }, [activeCity]);
+    const fetchFlight = async (city = "تهران") => { // Default city is Tehran
+      try {
+        const response = await axios.get(`http://localhost:3001/api/fly?from=${city}`);
+        setFlights(response.data.results);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error fetching data", error);
+      }
+    };
 
-  const handleCityClick = (city) => {
-    const filteredFlights = flightsData.filter(
-      (flight) => flight.from === city || flight.to === city
-    );
-    setFlights(filteredFlights);
+    fetchFlight(); // Fetch flights for default city on component mount
+  }, []);
+
+  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
+
+  const handleCityClick = async (city) => {
     setActiveCity(city); // Update active city
+    const response = await fetch(`http://localhost:3001/api/fly?from=${city}`);
+    const data = await response.json();
+    setFlights(data.results);
   };
 
   return (
@@ -63,8 +40,11 @@ const HighFly = () => {
       <style>{`
        .swiper-slide { display:flex; }
         `}</style>
+        <style>
+          {`.swiper-wrapper { width: 100vw !important } `}
+        </style>
 
-      <div className="p-5">
+      <div className="py-5">
         <div className="flex gap-4 mb-5">
           {["تهران", "مشهد", "شیراز", "کیش"].map((city) => (
             <button
@@ -101,7 +81,7 @@ const HighFly = () => {
               >
                 <div style={{ width: "80px", height: "82px" }}>
                   <img
-                    src={flight.image}
+                    src={`http://localhost:3001/${flight.image}`}
                     alt={`${flight.from} to ${flight.to}`}
                     className="w-full h-full object-cover"
                   />

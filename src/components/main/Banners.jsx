@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,24 +9,17 @@ import "swiper/css";
 import "swiper/css/virtual";
 
 const Banners = () => {
-  const [banners, setBanners] = useState([]);
-  const [error, setError] = useState(null);
+  const { isPending, error, data:banners } = useQuery({
+    queryKey: ["banners"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/banners");
+      return response.data.results;
+    },
+  });
 
-  useEffect(() => {
-    const fetchBanners = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/api/banners");
-        setBanners(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
-    fetchBanners();
-  }, []);
-
-  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
   return (
     <>
       <style>{` .swiper-slide {justify-content: center;}`}</style>

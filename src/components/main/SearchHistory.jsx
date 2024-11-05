@@ -20,7 +20,7 @@ const SearchHistory = () => {
     { id: 10, text: "مشهد به قم" },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   const nextButton = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % buttons.length);
   };

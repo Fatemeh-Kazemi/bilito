@@ -1,27 +1,23 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Accordion = () => {
-  const [openIndex, setOpenIndex] = useState(null);  
-  const [questions, setQuestions] = useState([]);
-  const [error, setError] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
+  const {
+    isPending,
+    error,
+    data: questions,
+  } = useQuery({
+    queryKey: ["questions"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/questions");
+      return response.data.results;
+    },
+  });
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/questions');
-        setQuestions(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
-
-    fetchQuestions();
-  }, []);
-
-  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
-
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
+
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
@@ -10,41 +11,39 @@ import "swiper/css/virtual";
 const HighFly = () => {
   const [flights, setFlights] = useState([]);
   const [activeCity, setActiveCity] = useState("تهران"); // Set default active city
-  const [error, setError] = useState(null);
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["highFly", activeCity],
+    queryFn: async () => {
+      const response = await axios.get(
+        `http://localhost:3001/api/fly?from=${activeCity}`
+      );
+      return response.data.results;
+    },
+    enabled: !!activeCity,
+  });
 
   useEffect(() => {
-    const fetchFlight = async (city = "تهران") => { // Default city is Tehran
-      try {
-        const response = await axios.get(`http://localhost:3001/api/fly?from=${city}`);
-        setFlights(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
+    if (data) {
+      setFlights(data);
+    }
+  }, [data]);
 
-    fetchFlight(); // Fetch flights for default city on component mount
-  }, []);
-
-  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
   const handleCityClick = async (city) => {
     setActiveCity(city); // Update active city
-    const response = await fetch(`http://localhost:3001/api/fly?from=${city}`);
-    const data = await response.json();
-    setFlights(data.results);
   };
-
   return (
     <>
       <style>{`
        .swiper-slide { display:flex; }
         `}</style>
-        <style>
-          {`.swiper-wrapper { width: 100vw !important } `}
-        </style>
+      <style>{`.swiper-wrapper { width: 100vw !important } `}</style>
 
       <div className="py-5">
+        <p className="text-xl text-right font-bold mb-2">پر طرفدارترین پروازهای داخلی</p>
         <div className="flex gap-4 mb-5">
           {["تهران", "مشهد", "شیراز", "کیش"].map((city) => (
             <button

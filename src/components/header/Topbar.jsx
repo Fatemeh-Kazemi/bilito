@@ -1,33 +1,28 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 import logo from "../../assets/images/LOGO.svg";
-import banner from "../../assets/images/mainBanner.png";
 
 import Register from "./Register";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  
-  const [menu, setMenu] = useState([]);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/headerMenu');
-        setMenu(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
+  const {
+    isPending,
+    error,
+    data: headerMenu,
+  } = useQuery({
+    queryKey: ["headerMenu"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/headerMenu");
+      return response.data.results;
+    },
+  });
 
-    fetchMenu();
-  }, []);
-
-  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
+  if (isPending) return "Loading...";
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <>
@@ -42,7 +37,7 @@ const Topbar = () => {
                 id="navbar-sticky"
               >
                 <ul className="flex items-center flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 gap-6 md:flex-row md:mt-0 md:border-0 md:bg-white">
-                  {menu.map((item) =>
+                  {headerMenu.map((item) =>
                     item.children.length < 1 ? (
                       <li>
                         <a
@@ -82,7 +77,7 @@ const Topbar = () => {
                               {isOpen && (
                                 <ul className="absolute right-0 w-48 bg-white shadow-lg">
                                   {item.children.map((inItem) => (
-                                    <li className="p-2 hover:bg-gray-200">
+                                    <li className="p-2 hover:bg-blue-100">
                                       <a href={inItem.link}>{inItem.title}</a>
                                     </li>
                                   ))}
@@ -123,7 +118,7 @@ const Topbar = () => {
                   aria-controls="navbar-sticky"
                   aria-expanded="false"
                 >
-                  <span className="sr-only">Open main menu</span>
+                  <span className="sr-only">Open main headerMenu</span>
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
@@ -177,7 +172,7 @@ const Topbar = () => {
             <br />
             رزرو بلیط هواپیما با بیلتو
           </p>
-          <img src={banner} className="w-full" alt="" />
+          <img src={require("../../assets/images/mainBanner.png")} className="w-full" alt="" />
         </div>
       </header>
     </>

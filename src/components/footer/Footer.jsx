@@ -1,63 +1,38 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import Logo from "../../assets/images/LOGO.svg";
 
 const Footer = () => {
-  const [menu, setMenu] = useState([]);
-  const [socialLinks, setSocialLinks] = useState([]);
-  const [trustLinks, setTrustlLinks] = useState([]);
-  const [error, setError] = useState(null);
+  const { isLoading: isPendingMenu, error: errorMenu, data: headerMenu } = useQuery({
+    queryKey: ["footerMenu"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/footerMenu");
+      return response.data.results;
+    },
+  });
 
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/footerMenu"
-        );
-        setMenu(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
+  const { isLoading: isPendingSocial, error: errorSocial, data: socialLinks } = useQuery({
+    queryKey: ["socialLinks"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/socialLinks");
+      return response.data.results;
+    },
+  });
 
-    fetchMenu();
-  }, []);
+  const { isLoading: isPendingTrust, error: errorTrust, data: trustLinks } = useQuery({
+    queryKey: ["trustLinks"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/trustLinks");
+      return response.data.results;
+    },
+  });
 
-  useEffect(() => {
-    const fetchSocialLinks = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/socialLinks"
-        );
-        setSocialLinks(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
-
-    fetchSocialLinks();
-  }, []);
-
-  useEffect(() => {
-    const fetchTrustLinks = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/trustLinks"
-        );
-        setTrustlLinks(response.data.results);
-      } catch (error) {
-        setError(error.message);
-        console.error("Error fetching data", error);
-      }
-    };
-
-    fetchTrustLinks();
-  }, []);
-
-  if (error) return <div>خطا در بارگذاری داده‌ها: {error}</div>;
+  // Handle loading and error states
+  if (isPendingMenu || isPendingSocial || isPendingTrust) return "Loading...";
+  if (errorMenu) return "An error has occurred: " + errorMenu.message;
+  if (errorSocial) return "An error has occurred: " + errorSocial.message;
+  if (errorTrust) return "An error has occurred: " + errorTrust.message;
 
   function goToTop() {
     window.scrollTo({
@@ -99,7 +74,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              {menu.map((item) => (
+              {headerMenu.map((item) => (
                 <li className="hover:text-primary">
                   <a href={item.link}>{item.title}</a>
                 </li>

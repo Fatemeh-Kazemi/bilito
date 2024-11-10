@@ -5,6 +5,7 @@ import { useState } from "react";
 import logo from "../../assets/images/LOGO.svg";
 
 import Register from "./Register";
+import { Link } from "react-router-dom";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,6 @@ const Topbar = () => {
           <nav className="sticky bg-white w-full z-20 top-0 start-0">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
               <img src={logo} className="w-full*" alt="Bilito Logo" />
-
               <div
                 className="items-center justify-between hidden w-full md:flex md:w-auto"
                 id="navbar-sticky"
@@ -40,13 +40,13 @@ const Topbar = () => {
                   {headerMenu.map((item) =>
                     item.children.length < 1 ? (
                       <li>
-                        <a
-                          href={item.link}
+                        <Link
+                          to={item.to}
                           className="block py-2 px-3 rounded md:bg-transparent md:p-0 md:hover:text-primary"
                           aria-current="page"
                         >
                           {item.title}
-                        </a>
+                        </Link>
                       </li>
                     ) : (
                       <li>

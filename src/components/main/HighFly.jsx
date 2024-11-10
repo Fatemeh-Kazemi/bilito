@@ -43,7 +43,9 @@ const HighFly = () => {
       <style>{`.swiper-wrapper { width: 100vw !important } `}</style>
 
       <div className="py-5">
-        <p className="text-xl text-right font-bold mb-2">پر طرفدارترین پروازهای داخلی</p>
+        <p className="text-xl text-right font-bold mb-2">
+          پر طرفدارترین پروازهای داخلی
+        </p>
         <div className="flex gap-4 mb-5">
           {["تهران", "مشهد", "شیراز", "کیش"].map((city) => (
             <button

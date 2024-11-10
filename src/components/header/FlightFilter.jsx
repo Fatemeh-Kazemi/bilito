@@ -1,28 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { DatePicker } from "zaman";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import moment from "moment-jalaali";
 
 const FlightFilter = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues, reset
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    reset({
-      from: "",
-      to: "",
-      date: '',
-      flightClass: '',
-      passengerCount: ""
-    })
-  };
+    const formattedDate = moment(data.date, "jYYYY/jM/jD").format(
+      "jYYYY-jMM-jDD"
+    );
+
+    if (
+      !data.from ||
+      !data.to ||
+      !data.date ||
+      !data.passengerCount ||
+      !data.flightClass
+    ) {
+      alert("لطفاً همه فیلدها را پر کنید.");
+      return;
+    }
+
+    setSearchParams(
+      `?from=${data.from}&to=${data.to}&date=${formattedDate}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
+    );
+    reset();
+
+    fetch('http://localhost:3001/api/flightFilter' + searchParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => {
+        console.error('خطا در دریافت داده:', error);
+      });
+};
 
   const {
     isPending,
@@ -93,59 +118,56 @@ const FlightFilter = () => {
             <div>
               <select
                 {...register("from", {
-                  required: "This field is required",
+                  required: "این فیلد الزامی است",
                 })}
                 className={`border ${
-                  errors.flightClass ? "border-red-500" : "border-gray-300"
+                  errors.from ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
-                <option value="" disabled >
+                <option value="" disabled>
                   مبدا
                 </option>
                 {cities.map((city) => (
-                  <option key={city.id} value={city.id}>
+                  <option key={city.id} value={city.from}>
                     {city.name}
                   </option>
                 ))}
               </select>
-              {errors.flightClass && (
-                <span className="text-red-500">
-                  {errors.flightClass.message}
-                </span>
+              {errors.from && (
+                <span className="text-red-500">{errors.from.message}</span>
               )}
             </div>
 
             <div>
               <select
                 {...register("to", {
-                  required: "This field is required",
+                  required: "این فیلد الزامی است",
                 })}
                 className={`border ${
-                  errors.flightClass ? "border-red-500" : "border-gray-300"
+                  errors.to ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
                 <option value="" disabled>
                   مقصد
                 </option>
                 {cities.map((city) => (
-                  <option key={city.id} value={city.id}>
+                  <option key={city.id} value={city.to}>
                     {city.name}
                   </option>
                 ))}
               </select>
-              {errors.flightClass && (
-                <span className="text-red-500">
-                  {errors.flightClass.message}
-                </span>
+              {errors.to && (
+                <span className="text-red-500">{errors.to.message}</span>
               )}
             </div>
 
             <div>
               <div className="border border-gray-300 p-2 rounded-lg">
                 <DatePicker
-                onChange={(e) => {
-                  setValue('date',e.value)
-                }}
+                  onChange={(e) => {
+                    const jalaaliDate = moment(e.value).format("jYYYY/jM/jD");
+                    setValue("date", jalaaliDate);
+                  }}
                   inputAttributes={{ placeholder: "تاریخ" }}
                   className={`block w-full border ${
                     errors.date ? "border-red-500" : "border-gray-300"
@@ -195,7 +217,7 @@ const FlightFilter = () => {
                   errors.flightClass ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
-                <option value="">فرست کلاس</option>
+                <option value="first">فرست کلاس</option>
                 <option value="economy">اکونومی کلاس</option>
                 <option value="business">بیزینس کلاس</option>
               </select>

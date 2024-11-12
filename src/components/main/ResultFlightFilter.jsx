@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-const ResultFlightFilter = () => {
+const ResultFlightFilter = (get) => {
+  console.log("sakxmlasmc;as0", get)
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [departureTime, setDepartureTime] = useState([0, 24]);
   const [airlines, setAirlines] = useState([]);
@@ -71,7 +72,7 @@ const ResultFlightFilter = () => {
               </p>
             </>
           )}
-        </div>
+        </div> 
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"

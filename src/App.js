@@ -14,6 +14,9 @@ import Accordion from "./components/main/Accordion";
 import Benefits from "./components/main/Benefits";
 import Footer from "./components/footer/Footer";
 import ResultFlightFilter from "./components/main/ResultFlightFilter";
+import NotFound from "./components/main/NotFound";
+import Us from "./components/header/Us"
+import Filter from "./components/main/Filter";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <FullHeader />
+          <FullHeader />
         <Routes>
           <Route
             path="/"
@@ -37,9 +40,12 @@ function App() {
               </>
             }
           />
+          <Route path="us" element={<Us />} />
           <Route path="/result" element={<ResultFlightFilter />} />
+          <Route path="/filter" element={<Filter />} />
+        <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
+            <Footer />
       </QueryClientProvider>
     </div>
   );

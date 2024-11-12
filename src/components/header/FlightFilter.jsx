@@ -24,30 +24,25 @@ const FlightFilter = () => {
     );
 
     if (
-      !data.from ||
-      !data.to ||
-      !data.date ||
-      !data.passengerCount ||
-      !data.flightClass
+      data.from ||
+      data.to ||
+      data.date ||
+      data.passengerCount ||
+      data.flightClass
     ) {
+      /* setSearchParams(
+        `?from=${data.from}&to=${data.to}&date=${formattedDate}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
+      );*/
+      reset();
+
+      navigate(
+        `filter?from=${data.from}&to=${data.to}&date=${formattedDate}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
+      );
+    } else {
       alert("لطفاً همه فیلدها را پر کنید.");
       return;
     }
-
-    setSearchParams(
-      `?from=${data.from}&to=${data.to}&date=${formattedDate}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
-    );
-    reset();
-
-    fetch('http://localhost:3001/api/flightFilter' + searchParams)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      })
-      .catch(error => {
-        console.error('خطا در دریافت داده:', error);
-      });
-};
+  };
 
   const {
     isPending,
@@ -117,14 +112,12 @@ const FlightFilter = () => {
           <div className="[&_:is(div,input)]:flex-1 text-right flex flex-col md:flex-row gap-4">
             <div>
               <select
-                {...register("from", {
-                  required: "این فیلد الزامی است",
-                })}
+                {...register("from")}
                 className={`border ${
                   errors.from ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   مبدا
                 </option>
                 {cities.map((city) => (
@@ -140,14 +133,12 @@ const FlightFilter = () => {
 
             <div>
               <select
-                {...register("to", {
-                  required: "این فیلد الزامی است",
-                })}
+                {...register("to")}
                 className={`border ${
                   errors.to ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   مقصد
                 </option>
                 {cities.map((city) => (
@@ -182,7 +173,6 @@ const FlightFilter = () => {
             <div>
               <input
                 {...register("passengerCount", {
-                  required: "این فیلد الزامی است",
                   min: { value: 1, message: "حداقل ۱ مسافر" },
                   max: { value: 6, message: "حداکثر ۶ مسافر" },
                   pattern: {
@@ -210,13 +200,12 @@ const FlightFilter = () => {
 
             <div>
               <select
-                {...register("flightClass", {
-                  required: "این فیلد الزامی است",
-                })}
+                {...register("flightClass")}
                 className={`placeholder-black-5 border ${
                   errors.flightClass ? "border-red-500" : "border-gray-300"
                 } p-2 w-full rounded-lg`}
               >
+                <option value="" selected>کلاس پرواز</option>
                 <option value="first">فرست کلاس</option>
                 <option value="economy">اکونومی کلاس</option>
                 <option value="business">بیزینس کلاس</option>

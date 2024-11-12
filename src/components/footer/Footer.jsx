@@ -74,8 +74,8 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              {headerMenu.map((item) => (
-                <li className="hover:text-primary">
+              {headerMenu.map((item,index) => (
+                <li key={index} className="hover:text-primary">
                   <a href={item.link}>{item.title}</a>
                 </li>
               ))}

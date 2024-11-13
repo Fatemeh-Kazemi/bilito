@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
+import Loading from "./Loading";
 
 const HighFly = () => {
   const [flights, setFlights] = useState([]);
@@ -29,7 +30,7 @@ const HighFly = () => {
     }
   }, [data]);
 
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   const handleCityClick = async (city) => {

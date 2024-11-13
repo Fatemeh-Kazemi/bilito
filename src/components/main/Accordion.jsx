@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import Loading from "./Loading";
 
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -16,7 +17,7 @@ const Accordion = () => {
     },
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   const toggleAccordion = (index) => {

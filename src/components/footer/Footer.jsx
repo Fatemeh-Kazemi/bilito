@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../main/Loading";
 
 import Logo from "../../assets/images/LOGO.svg";
 
@@ -29,7 +30,7 @@ const Footer = () => {
   });
 
   // Handle loading and error states
-  if (isPendingMenu || isPendingSocial || isPendingTrust) return "Loading...";
+  if (isPendingMenu || isPendingSocial || isPendingTrust) return <Loading />;
   if (errorMenu) return "An error has occurred: " + errorMenu.message;
   if (errorSocial) return "An error has occurred: " + errorSocial.message;
   if (errorTrust) return "An error has occurred: " + errorTrust.message;
@@ -42,9 +43,9 @@ const Footer = () => {
   }
 
   return (
-    <>
-      <div className="container mx-auto p-5 flex flex-col gap-4">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-6 text-right">
+    <div className="bg-gray-2">
+      <div className="container mx-autoflex flex-col gap-4">
+        <div className="p-5 grid grid-cols-2 md:grid-cols-6 gap-6 text-right">
           <div className="hidden md:block md:col-span-4 md:order-1">
             {" "}
             <h2 className="text-lg font-bold leading-10">اپلیکیشن بیلیتو</h2>
@@ -148,7 +149,7 @@ const Footer = () => {
           <span className="block text-center">بازگشت به بالا</span>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

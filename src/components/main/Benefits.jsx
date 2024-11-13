@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "./Loading";
 
 const Benefits = () => {
   const { isPending, error, data:benefits } = useQuery({
@@ -10,7 +11,7 @@ const Benefits = () => {
     },
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   return (

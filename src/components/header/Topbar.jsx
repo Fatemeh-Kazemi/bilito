@@ -6,6 +6,7 @@ import logo from "../../assets/images/LOGO.svg";
 
 import Register from "./Register";
 import { Link } from "react-router-dom";
+import Loading from "../main/Loading";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ const Topbar = () => {
     },
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;
 
   return (

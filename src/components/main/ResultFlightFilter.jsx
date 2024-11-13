@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const ResultFlightFilter = (get) => {
-  console.log("sakxmlasmc;as0", get)
+const ResultFlightFilter = ({ results }) => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [departureTime, setDepartureTime] = useState([0, 24]);
   const [airlines, setAirlines] = useState([]);
@@ -22,7 +21,7 @@ const ResultFlightFilter = (get) => {
   };
 
   return (
-    <div className="container mx-auto flex gap-5 p-10 m-5 font-normal">
+    <div className="container mx-auto flex items-start gap-5 p-10 m-5 font-normal">
       <div className="w-1/3 rounded-lg bg-gray-100 p-4 border-l text-right flex flex-col gap-5">
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
@@ -72,7 +71,7 @@ const ResultFlightFilter = (get) => {
               </p>
             </>
           )}
-        </div> 
+        </div>
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -352,16 +351,15 @@ const ResultFlightFilter = (get) => {
         </div>
       </div>
       <div className="w-2/3">
-        {/* Results Section */}
-        {[...Array(5)].map((_, index) => (
+        {results.map((result) => (
           <div
-            key={index}
+            key={result.id}
             className="border rounded-lg p-4 mb-4 flex flex-col gap-2"
           >
             <div className="flex justify-between">
               <div className="flex gap-2">
                 <span className="bg-red-100 text-red-600 px-2 py-1 rounded-md">
-                  صندلی باقی مانده: 5
+                  صندلی باقی مانده: {result.passCount}
                 </span>
                 <span className="bg-red-100 text-red-600 px-2 py-1 rounded-md">
                   غیر قابل استرداد
@@ -369,34 +367,57 @@ const ResultFlightFilter = (get) => {
               </div>
               <div className="flex gap-2">
                 <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md">
-                  اکونومی
+                  {result.flightType}
                 </span>
                 <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md">
-                  سیستمی
+                  {result.buyingWay}
                 </span>
               </div>
             </div>
-            <div className="text-right flex items-stretch gap-5">
+            <div className="text-right flex items-center gap-5">
               <div className="flex flex-col">
                 <img
-                  src={require("../../assets/images/Airline logo.png")}
-                  alt="Logo"
+                  src={`http://localhost:3001/${result.airline.logo}`}
+                  alt={result.airline.name}
                   className="inline-block w-10 h-10"
                 />
-                <span>ایران ایر</span>
+                <span>{result.airline.name}</span>
               </div>
               <div className="flex flex-col justify-between">
-                <span>10:00</span>
-                <span>استانبول</span>
+                <span>{result.fromTime}</span>
+                <span className="text-gray-5">{result.from}</span>
               </div>
-              <span>20kg</span>
+              <div className="flex flex-col justify-between items-center gap-2">
+                <span className="text-gray-5">{result.distanceTime}</span>
+                <svg
+                  width="142"
+                  height="24"
+                  viewBox="0 0 142 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M141 11.5L1 11.5"
+                    stroke="#CBCBCB"
+                    stroke-linecap="round"
+                    stroke-dasharray="5 5"
+                  />
+                  <path
+                    d="M69.6301 3.95L67.6201 8.62L67.1801 9.66C67.1001 9.82 66.8901 9.96 66.7101 9.96H63.6501C62.6901 9.96 61.5501 10.67 61.1101 11.53C60.9601 11.83 60.9601 12.19 61.1101 12.49C61.5501 13.34 62.7001 14.05 63.6601 14.05H66.7201C66.9001 14.05 67.1101 14.19 67.1901 14.35L69.6401 20.05C69.9001 20.68 70.6901 21.19 71.3701 21.19H72.6901C73.5401 21.19 73.9601 20.55 73.6201 19.76L71.4601 14.75C71.2901 14.36 71.5001 14.04 71.9301 14.04H73.0401H74.8401C75.0701 14.04 75.4001 14.17 75.5601 14.33L77.8901 16.65C78.1301 16.89 78.6001 17 78.9401 16.89L80.3001 16.44C80.8901 16.26 81.1701 15.59 80.8901 15.04L78.8901 12.66C78.5801 12.3 78.5801 11.71 78.8901 11.35L80.8901 8.97C81.1601 8.42 80.8901 7.75 80.3001 7.55L78.9401 7.1C78.6101 6.99 78.1301 7.1 77.8901 7.34L75.5601 9.66C75.4001 9.83 75.0701 9.96 74.8401 9.96H71.9301C71.5001 9.96 71.3001 9.65 71.4601 9.25L73.6201 4.24C73.9601 3.45 73.5401 2.81 72.6901 2.81H71.3701C70.6901 2.81 69.9001 3.32 69.6301 3.95Z"
+                    fill="#1D91CC"
+                  />
+                </svg>
+
+                <span className="text-gray-5">{result.airline.baggage}</span>
+              </div>
               <div className="flex flex-col justify-between">
-                <span>10:00</span>
-                <span>دبی</span>
+                <span>{result.toTime}</span>
+                <span className="text-gray-5">{result.to}</span>
               </div>
             </div>
             <div className="mt-2 text-left">
-              <span className="text-blue-500">قیمت: 500,000 تومان</span>
+              <span className="text-blue-500">قیمت: {result.price} تومان</span>
+              {" "}
               <button className="bg-blue-500 text-white rounded-md px-8 py-2">
                 جزئیات بلیط
               </button>

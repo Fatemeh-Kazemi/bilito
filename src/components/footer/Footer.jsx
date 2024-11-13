@@ -1,11 +1,16 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import Loading from "../main/Loading";
-
 import Logo from "../../assets/images/LOGO.svg";
 
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+import Loading from "../main/Loading";
+
 const Footer = () => {
-  const { isLoading: isPendingMenu, error: errorMenu, data: headerMenu } = useQuery({
+  const {
+    isLoading: isPendingMenu,
+    error: errorMenu,
+    data: headerMenu,
+  } = useQuery({
     queryKey: ["footerMenu"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/footerMenu");
@@ -13,7 +18,11 @@ const Footer = () => {
     },
   });
 
-  const { isLoading: isPendingSocial, error: errorSocial, data: socialLinks } = useQuery({
+  const {
+    isLoading: isPendingSocial,
+    error: errorSocial,
+    data: socialLinks,
+  } = useQuery({
     queryKey: ["socialLinks"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/socialLinks");
@@ -21,7 +30,11 @@ const Footer = () => {
     },
   });
 
-  const { isLoading: isPendingTrust, error: errorTrust, data: trustLinks } = useQuery({
+  const {
+    isLoading: isPendingTrust,
+    error: errorTrust,
+    data: trustLinks,
+  } = useQuery({
     queryKey: ["trustLinks"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/trustLinks");
@@ -29,11 +42,10 @@ const Footer = () => {
     },
   });
 
-  // Handle loading and error states
   if (isPendingMenu || isPendingSocial || isPendingTrust) return <Loading />;
-  if (errorMenu) return "An error has occurred: " + errorMenu.message;
-  if (errorSocial) return "An error has occurred: " + errorSocial.message;
-  if (errorTrust) return "An error has occurred: " + errorTrust.message;
+  if (errorMenu) return "خطایی در بارگذاری داده ها رخ داد ..." + errorMenu.message;
+  if (errorSocial) return "خطایی در بارگذاری داده ها رخ داد ..." + errorSocial.message;
+  if (errorTrust) return "خطایی در بارگذاری داده ها رخ داد ..." + errorTrust.message;
 
   function goToTop() {
     window.scrollTo({
@@ -75,7 +87,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              {headerMenu.map((item,index) => (
+              {headerMenu.map((item, index) => (
                 <li key={index} className="hover:text-primary">
                   <a href={item.link}>{item.title}</a>
                 </li>

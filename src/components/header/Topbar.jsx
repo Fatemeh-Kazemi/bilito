@@ -1,11 +1,12 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-
 import logo from "../../assets/images/LOGO.svg";
 
-import Register from "./Register";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import Register from "./RegisterModal";
 import Loading from "../main/Loading";
 
 const Topbar = () => {
@@ -24,7 +25,7 @@ const Topbar = () => {
   });
 
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
     <>
@@ -173,7 +174,11 @@ const Topbar = () => {
             <br />
             رزرو بلیط هواپیما با بیلتو
           </p>
-          <img src={require("../../assets/images/mainBanner.png")} className="w-full" alt="" />
+          <img
+            src={require("../../assets/images/mainBanner.png")}
+            className="w-full"
+            alt=""
+          />
         </div>
       </header>
     </>

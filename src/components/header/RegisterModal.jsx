@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Register = ({ logo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const Register = ({ logo }) => {
     setIsChecked(!isChecked);
   };
 
-  const isButtonDisabled = (phoneNumber === "") || !isChecked;
+  const isButtonDisabled = phoneNumber === "" || !isChecked;
 
   return (
     <div className="relative">

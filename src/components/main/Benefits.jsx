@@ -1,9 +1,14 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+
 import Loading from "./Loading";
 
 const Benefits = () => {
-  const { isPending, error, data:benefits } = useQuery({
+  const {
+    isPending,
+    error,
+    data: benefits,
+  } = useQuery({
     queryKey: ["benefits"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/benefits");
@@ -12,7 +17,7 @@ const Benefits = () => {
   });
 
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
     <div className="bg-blue-100">

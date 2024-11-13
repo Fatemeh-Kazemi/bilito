@@ -1,11 +1,12 @@
-import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
-import ResultFlightFilter from "./ResultFlightFilter";
-import Loading from "./Loading";
 
-const Filter = () => {
+import ResultInputsFlightFilter from "./ResultInputsFlightFilter";
+import Loading from "../Loading";
+import ResultServerFlightFilter from "./ResultServerFlightFilter";
+
+const FullFilterPage = () => {
   const [searchParams] = useSearchParams();
 
   const from = searchParams.get("from");
@@ -38,13 +39,13 @@ const Filter = () => {
   });
 
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "اتفاقی رخ داده است ..." + error.message;
 
   return (
     <div>
-      <ResultFlightFilter results={filteredFlights} />
+      <ResultServerFlightFilter results={filteredFlights}  />
     </div>
   );
 };
 
-export default Filter;
+export default FullFilterPage;

@@ -88,7 +88,7 @@ const Us = () => {
                 آدرس: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون، طوس غربی.{" "}
               </p>
               <p>شماره تماس: 32 54 7691 -021</p>
-              <p>ایمیل: shiva.arghvni1996@gmail.com</p>
+              <p>ایمیل: kazemifk484@gmail.com</p>
             </div>
             <div className="w-100 md:w-1/4 border-2 rounded-md">
               <iframe

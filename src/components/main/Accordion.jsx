@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+
 import Loading from "./Loading";
 
 const Accordion = () => {
@@ -18,7 +19,7 @@ const Accordion = () => {
   });
 
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);

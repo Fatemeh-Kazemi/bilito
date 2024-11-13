@@ -1,22 +1,22 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
 import {
   QueryClient,
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
 
+import "./App.css";
+
 import FullHeader from "./components/header/FullHeader.jsx";
+import Us from "./components/main/Us";
+import FullFilterPage from "./components/main/filter/FullFilterPage";
 import SearchHistory from "./components/main/SearchHistory";
 import Banners from "./components/main/Banners";
 import HighFly from "./components/main/HighFly";
 import Accordion from "./components/main/Accordion";
 import Benefits from "./components/main/Benefits";
 import Footer from "./components/footer/Footer";
-import ResultFlightFilter from "./components/main/ResultFlightFilter";
 import NotFound from "./components/main/NotFound";
-import Us from "./components/header/Us"
-import Filter from "./components/main/Filter";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-          <FullHeader />
+        <FullHeader />
         <Routes>
           <Route
             path="/"
@@ -41,11 +41,10 @@ function App() {
             }
           />
           <Route path="us" element={<Us />} />
-          <Route path="/result" element={<ResultFlightFilter />} />
-          <Route path="/filter" element={<Filter />} />
-        <Route path="*" element={<NotFound />} />
+          <Route path="/filter" element={<FullFilterPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-            <Footer />
+        <Footer />
       </QueryClientProvider>
     </div>
   );

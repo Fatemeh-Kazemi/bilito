@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const ResultFlightFilter = ({ results }) => {
+const ResultServerFlightFilter = ({ results }) => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [departureTime, setDepartureTime] = useState([0, 24]);
   const [airlines, setAirlines] = useState([]);
@@ -416,8 +416,7 @@ const ResultFlightFilter = ({ results }) => {
               </div>
             </div>
             <div className="mt-2 text-left">
-              <span className="text-blue-500">قیمت: {result.price} تومان</span>
-              {" "}
+              <span className="text-blue-500">قیمت: {result.price} تومان</span>{" "}
               <button className="bg-blue-500 text-white rounded-md px-8 py-2">
                 جزئیات بلیط
               </button>
@@ -429,4 +428,4 @@ const ResultFlightFilter = ({ results }) => {
   );
 };
 
-export default ResultFlightFilter;
+export default ResultServerFlightFilter;

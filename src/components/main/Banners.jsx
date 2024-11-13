@@ -1,16 +1,19 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
+
 import Loading from "./Loading";
 
 const Banners = () => {
-  const { isPending, error, data:banners } = useQuery({
+  const {
+    isPending,
+    error,
+    data: banners,
+  } = useQuery({
     queryKey: ["banners"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/banners");
@@ -19,7 +22,7 @@ const Banners = () => {
   });
 
   if (isPending) return <Loading />;
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
     <>

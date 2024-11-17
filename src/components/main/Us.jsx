@@ -1,7 +1,25 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Loading from "./Loading";
+import { useQuery } from "@tanstack/react-query";
 
 const Us = () => {
   const [activeTab, setActiveTab] = useState("about");
+  
+  const {
+    isPending,
+    error,
+    data: contact,
+  } = useQuery({
+    queryKey: ["contact"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/contact");
+      return response.data.results;
+    },
+  });
+
+  if (isPending) return <Loading />;
+  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
     <div className="container mx-auto p-4">
@@ -84,11 +102,11 @@ const Us = () => {
               <p className="text-2xl font-bold border-b-2 text-gray-500">
                 اطلاعات تماس
               </p>
-              <p>
-                آدرس: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون، طوس غربی.{" "}
-              </p>
-              <p>شماره تماس: 32 54 7691 -021</p>
-              <p>ایمیل: kazemifk484@gmail.com</p>
+             {
+              contact.map((item)=>(
+                <p>{item.description} : {item.data}</p>
+              ))
+             }
             </div>
             <div className="w-100 md:w-1/4 border-2 rounded-md">
               <iframe

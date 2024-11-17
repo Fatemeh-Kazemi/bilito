@@ -42,10 +42,28 @@ const Footer = () => {
     },
   });
 
-  if (isPendingMenu || isPendingSocial || isPendingTrust) return <Loading />;
-  if (errorMenu) return "خطایی در بارگذاری داده ها رخ داد ..." + errorMenu.message;
-  if (errorSocial) return "خطایی در بارگذاری داده ها رخ داد ..." + errorSocial.message;
-  if (errorTrust) return "خطایی در بارگذاری داده ها رخ داد ..." + errorTrust.message;
+  const {
+    isPendingContact,
+    errorContact,
+    data: footerContact,
+  } = useQuery({
+    queryKey: ["footerContact"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:3001/api/contact");
+      return response.data.results;
+    },
+  });
+
+  if (isPendingMenu || isPendingSocial || isPendingTrust || isPendingContact)
+    return <Loading />;
+  if (errorMenu)
+    return "خطایی در بارگذاری داده ها رخ داد ..." + errorMenu.message;
+  if (errorSocial)
+    return "خطایی در بارگذاری داده ها رخ داد ..." + errorSocial.message;
+  if (errorTrust)
+    return "خطایی در بارگذاری داده ها رخ داد ..." + errorTrust.message;
+  if (errorContact)
+    return "خطایی در بارگذاری داده ها رخ داد ..." + errorContact.message;
 
   function goToTop() {
     window.scrollTo({
@@ -73,11 +91,11 @@ const Footer = () => {
               alt="Website Logo"
               className="h-8 hidden md:block"
             />
-            <p className="text-md leading-10">تلفن پشتیبانی: 98 76 54 32_021</p>
-            <p className="text-md">
-              آدرس دفتر مرکزی: تهران، میدان آزادی، خیابان آزادی، خیابان جیحون،
-              طوس غربی.
-            </p>
+            {footerContact.slice(0, 2).map((item) => (
+              <p className="text-md leading-10">
+                {item.description} : {item.data}
+              </p>
+            ))}
           </div>
 
           <div className="col-span-1 md:hidden">
@@ -134,9 +152,11 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-            <a href="" className="text-primary font-bold">
-              kazemifk484@gmail.com
-            </a>
+            {footerContact.slice(2, 3).map((item) => (
+              <a href="" className="text-primary font-bold">
+                {item.description} : {item.data}
+              </a>
+            ))}
           </div>
         </div>
       </div>

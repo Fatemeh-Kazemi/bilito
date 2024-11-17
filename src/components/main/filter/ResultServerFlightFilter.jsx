@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ModalDetailsFlight from "./ModalDetailsFlight";
 
 const ResultServerFlightFilter = ({ results }) => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -16,7 +17,6 @@ const ResultServerFlightFilter = ({ results }) => {
     flightType: true,
   });
 
-  const [activeTab, setActiveTab] = useState("info");
 
   const toggleFilter = (filterName) => {
     setIsOpen((prevState) => ({
@@ -31,14 +31,30 @@ const ResultServerFlightFilter = ({ results }) => {
     setSelectedFlight(result);
     setIsModalOpen(true); // Open the modal
   };
-
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
+  const resetFilteredValues = () => {
+    setPriceRange([0, 1000]);
+    setDepartureTime([0, 24]);
+    setAirlines([]);
+    setStops("");
+    setAirports([]);
+    setFlightType([]);
+  };
 
   return (
-    <div className="container mx-auto flex items-start gap-5 p-10 m-5 font-normal">
-      <div className="w-1/3 rounded-lg bg-gray-100 p-4 border-l text-right flex flex-col gap-5">
+    <div className="container mx-auto flex flex-col md:flex-row items-start gap-5 p-10 m-5 font-normal">
+      <div className="w-[100%] md:w-1/3 rounded-lg bg-gray-100 p-4 border-l text-right flex flex-col gap-5">
+        <div className="flex justify-between pb-2 border-b-[1px]">
+          <p>
+            تعداد نتایج: <span>{results.length}</span>
+          </p>
+          <p onClick={resetFilteredValues} className="text-blue-500">
+            پاک کردن فیلترها
+          </p>
+        </div>
+        {/* محدوده قیمتی */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -88,6 +104,7 @@ const ResultServerFlightFilter = ({ results }) => {
             </>
           )}
         </div>
+        {/* ساعت */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -139,6 +156,7 @@ const ResultServerFlightFilter = ({ results }) => {
             </>
           )}
         </div>
+        {/* شرکت هواپیمایی */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -179,6 +197,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="ایران ایر"
+                  checked={airlines.includes("ایران ایر")}
                   onChange={(e) => setAirlines([...airlines, e.target.value])}
                 />{" "}
                 ایران ایر
@@ -187,6 +206,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="ماهان"
+                  checked={airlines.includes("ماهان")}
                   onChange={(e) => setAirlines([...airlines, e.target.value])}
                 />{" "}
                 ماهان
@@ -194,6 +214,7 @@ const ResultServerFlightFilter = ({ results }) => {
             </>
           )}
         </div>
+        {/* تعداد توقف */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -234,7 +255,18 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="radio"
                   name="stops"
+                  value="همه"
+                  checked={stops.includes("همه")}
+                  onChange={(e) => setStops(e.target.value)}
+                />{" "}
+                همه
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="stops"
                   value="مستقیم"
+                  checked={stops.includes("مستقیم")}
                   onChange={(e) => setStops(e.target.value)}
                 />{" "}
                 مستقیم
@@ -243,14 +275,26 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="radio"
                   name="stops"
-                  value="یک توقف"
+                  value="یک"
+                  checked={stops.includes("یک")}
                   onChange={(e) => setStops(e.target.value)}
                 />{" "}
                 یک توقف
               </label>
+              <label>
+                <input
+                  type="radio"
+                  name="stops"
+                  value="دو یا بیشتر"
+                  checked={stops.includes("دو یا بیشتر")}
+                  onChange={(e) => setStops(e.target.value)}
+                />{" "}
+                دو یا بیشتر
+              </label>
             </>
           )}
         </div>
+        {/* فرودگاه */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -291,6 +335,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="فرودگاه امام"
+                  checked={airports.includes("فرودگاه امام")}
                   onChange={(e) => setAirports([...airports, e.target.value])}
                 />{" "}
                 فرودگاه امام
@@ -299,6 +344,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="فرودگاه مهرآباد"
+                  checked={airports.includes("فرودگاه مهرآباد")}
                   onChange={(e) => setAirports([...airports, e.target.value])}
                 />{" "}
                 فرودگاه مهرآباد
@@ -306,6 +352,7 @@ const ResultServerFlightFilter = ({ results }) => {
             </>
           )}
         </div>
+        {/* نوع پرواز */}
         <div className="flex flex-col pb-2 border-b-[1px]">
           <h2
             className="font-bold cursor-pointer flex justify-between"
@@ -346,6 +393,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="پرواز داخلی"
+                  checked={flightType.includes("پرواز داخلی")}
                   onChange={(e) =>
                     setFlightType([...flightType, e.target.value])
                   }
@@ -356,6 +404,7 @@ const ResultServerFlightFilter = ({ results }) => {
                 <input
                   type="checkbox"
                   value="پرواز خارجی"
+                  checked={flightType.includes("پرواز خارجی")}
                   onChange={(e) =>
                     setFlightType([...flightType, e.target.value])
                   }
@@ -366,14 +415,15 @@ const ResultServerFlightFilter = ({ results }) => {
           )}
         </div>
       </div>
-      <div className="w-2/3">
+      <div className="w-[100%] md:w-2/3">
+        {/* اگر نتیجه ای از سرور برگشت نمایش دهد  */}
         {results.length > 0 ? (
           results.map((result) => (
             <div
               key={result.id}
               className="border rounded-lg p-4 mb-4 flex flex-col gap-2"
             >
-              <div className="flex justify-between">
+              <div className="flex flex-col md:flex-row justify-between gap-2">
                 <div className="flex gap-2">
                   <span className="bg-red-100 text-red-600 px-2 py-1 rounded-md">
                     صندلی باقی مانده: {result.passCount}
@@ -445,6 +495,7 @@ const ResultServerFlightFilter = ({ results }) => {
             </div>
           ))
         ) : (
+          // در صورتی که هیچ نتیچه ای برای نمایش وجود نداشت
           <div className="flex justify-center">
             <div className="w-[50%] h-[50%]">
               <img
@@ -459,59 +510,7 @@ const ResultServerFlightFilter = ({ results }) => {
           </div>
         )}
         {isModalOpen && (
-          <div className="modal-overlay fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
-            <div className="modal-content flex flex-col relative bg-white rounded-lg shadow-lg w-11/12 md:w-[600px] md:h-[422px] p-6">
-              <button onClick={closeModal} className="absolute top-2 right-2">
-                ✖
-              </button>
-              <div className="flex mb-4">
-                <button
-                  className={`border-b-2 border-gray-4 p-2 font-bold ${
-                    activeTab === "info"
-                      ? "text-blue-700 border-blue-500"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => setActiveTab("info")}
-                >
-                  جزئیات بلیط
-                </button>
-                <button
-                  className={`border-b-2 border-gray-4 p-2 font-bold ${
-                    activeTab === "rules"
-                      ? "text-blue-700 border-blue-500"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => setActiveTab("rules")}
-                >
-                  قوانین استرداد بلیط
-                </button>
-              </div>
-
-              {activeTab === "info" && (
-                <div className="flex flex-col gap-2 text-right">
-                  <h2>جزئیات پرواز</h2>
-                  <p>از: {selectedFlight.from}</p>
-                  <p>به: {selectedFlight.to}</p>
-                  <p>تاریخ: {selectedFlight.date}</p>
-                  <p>
-                    زمان پرواز: {selectedFlight.fromTime} تا{" "}
-                    {selectedFlight.toTime}
-                  </p>
-                  <p>شرکت هواپیمایی: {selectedFlight.airline.name}</p>
-                  <p>قیمت: {selectedFlight.price} تومان</p>
-                  {/* اطلاعات اضافی */}
-                </div>
-              )}
-
-              {activeTab === "rules" && (
-                <div className="container mx-auto text-right flex flex-col gap-8">
-                  <p>
-                  اگر از ساعت ۱۲ ظهر روز قبل از پرواز به بعد باشد، میزان جریمه ۴۰ درصد از بهای بلیط خواهد بود. استرداد بلیط در کلاس نرخی Q: در این گروه، از زمان صدور تا پیش از ساعت ۱۲ ظهر روز قبل از پرواز، ۳۰ درصد از قیمت بلیط به‌عنوان جریمه کسر می‌شود. از ساعت ۱۲ ظهر روز قبل از پرواز به بعد هم ۶۰ درصد از هزینه کسر خواهد شد.
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+          <ModalDetailsFlight selectedFlight={selectedFlight} closeModal={closeModal} />
         )}
       </div>
     </div>

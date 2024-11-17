@@ -47,7 +47,7 @@ const Footer = () => {
     errorContact,
     data: footerContact,
   } = useQuery({
-    queryKey: ["footerContact"],
+    queryKey: ["contact"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/contact");
       return response.data.results;

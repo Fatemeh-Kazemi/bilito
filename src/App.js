@@ -17,6 +17,7 @@ import Accordion from "./components/main/Accordion";
 import Benefits from "./components/main/Benefits";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/main/NotFound";
+import StepforBuying from "./components/main/StepforBuying";
 
 const queryClient = new QueryClient();
 
@@ -40,9 +41,10 @@ function App() {
               </>
             }
           />
-          <Route path="us" element={<Us />} />
-          <Route path="/filter" element={<FullFilterPage />} />
-          <Route path="*" element={<NotFound />} />
+            <Route path="us" element={<Us />} />
+            <Route path="/filter" element={<FullFilterPage />} />
+            <Route path="/steps" element={<StepforBuying />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </QueryClientProvider>

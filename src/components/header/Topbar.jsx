@@ -59,7 +59,10 @@ const Topbar = () => {
                               onMouseEnter={() => setIsOpen(true)}
                               onMouseLeave={() => setIsOpen(false)}
                             >
-                              <a href="" className="md:hover:text-primary">
+                              <a
+                                href={item.to}
+                                className="md:hover:text-primary"
+                              >
                                 {item.title}
                               </a>
                               <svg
@@ -80,7 +83,7 @@ const Topbar = () => {
                                 <ul className="absolute right-0 w-48 bg-white shadow-lg">
                                   {item.children.map((inItem) => (
                                     <li className="p-2 hover:bg-blue-100">
-                                      <a href={inItem.link}>{inItem.title}</a>
+                                      <a href={inItem.to}>{inItem.title}</a>
                                     </li>
                                   ))}
                                 </ul>

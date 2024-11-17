@@ -12,6 +12,7 @@ const Us = () => {
     data: contact,
   } = useQuery({
     queryKey: ["contact"],
+    enabled: false,
     queryFn: async () => {
       const response = await axios.get("http://localhost:3001/api/contact");
       return response.data.results;

@@ -40,7 +40,7 @@ const ResultInputsFlightFilter = () => {
   if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between">
+    <div className="flex flex-row justify-between">
       <p>
         بلیط هواپیما {from} به {to}
       </p>

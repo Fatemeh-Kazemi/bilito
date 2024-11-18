@@ -7,70 +7,43 @@ import Loading from "../main/Loading";
 
 const Footer = () => {
   const {
-    isLoading: isPendingMenu,
-    error: errorMenu,
-    data: headerMenu,
+    isPending,
+    error,
+    data,
   } = useQuery({
-    queryKey: ["footerMenu"],
+    queryKey: ["footer"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/footerMenu");
-      return response.data.results;
+      const response = await axios.get("http://localhost:3001/api/footer");
+      return response.data.result;
     },
   });
 
-  const {
-    isLoading: isPendingSocial,
-    error: errorSocial,
-    data: socialLinks,
-  } = useQuery({
-    queryKey: ["socialLinks"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/socialLinks");
-      return response.data.results;
-    },
-  });
-
-  const {
-    isLoading: isPendingTrust,
-    error: errorTrust,
-    data: trustLinks,
-  } = useQuery({
-    queryKey: ["trustLinks"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/trustLinks");
-      return response.data.results;
-    },
-  });
-
-  const {
-    isPendingContact,
-    errorContact,
-    data: footerContact,
-  } = useQuery({
-    queryKey: ["contact"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/contact");
-      return response.data.results;
-    },
-  });
-
-  if (isPendingMenu || isPendingSocial || isPendingTrust || isPendingContact)
-    return <Loading />;
-  if (errorMenu)
-    return "خطایی در بارگذاری داده ها رخ داد ..." + errorMenu.message;
-  if (errorSocial)
-    return "خطایی در بارگذاری داده ها رخ داد ..." + errorSocial.message;
-  if (errorTrust)
-    return "خطایی در بارگذاری داده ها رخ داد ..." + errorTrust.message;
+  
+    function goToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+    const {
+      isPendingContact,
+      errorContact,
+      data: footerContact,
+    } = useQuery({
+      queryKey: ["contact"],
+      queryFn: async () => {
+        const response = await axios.get("http://localhost:3001/api/contact");
+        return response.data.results;
+      },
+    });
+  
+    if (isPending || isPendingContact)
+      return <Loading />;
+      if (error)
+    return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
   if (errorContact)
     return "خطایی در بارگذاری داده ها رخ داد ..." + errorContact.message;
 
-  function goToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
 
   return (
     <div className="bg-gray-2">
@@ -105,7 +78,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2 md:order-4">
             <h3 className="text-lg font-bold">لینک های مفید</h3>
             <ul className="list-none space-y-2">
-              {headerMenu.map((item, index) => (
+              {data.footerMenu.map((item, index) => (
                 <li key={index} className="hover:text-primary">
                   <a href={item.link}>{item.title}</a>
                 </li>
@@ -130,7 +103,7 @@ const Footer = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 mt-4">
           <div className="md:order-2 flex justify-center md:justify-end items-center gap-4">
-            {trustLinks.map((eachItem) => (
+            {data.trustLinks.map((eachItem) => (
               <img
                 src={`http://localhost:3001/${eachItem.img}`}
                 alt={eachItem.alt}
@@ -140,7 +113,7 @@ const Footer = () => {
           </div>
           <div className="md:order-1 flex items-center flex-col text-right pr-10 gap-2">
             <ul className="flex list-none gap-4">
-              {socialLinks.map((eachItem) => (
+              {data.socialLinks.map((eachItem) => (
                 <li>
                   <a href="#">
                     <img

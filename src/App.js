@@ -18,6 +18,7 @@ import Benefits from "./components/main/Benefits";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/main/NotFound";
 import StepforBuying from "./components/main/StepforBuying";
+import FlightDetails from "./components/main/filter/FlightDetails";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="us" element={<Us />} />
             <Route path="/filter" element={<FullFilterPage />} />
             <Route path="/steps" element={<StepforBuying />} />
+            <Route path="/flight/:flightId" element={<FlightDetails />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

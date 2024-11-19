@@ -10,7 +10,10 @@ const Register = ({ logo }) => {
   };
 
   const handlePhoneChange = (e) => {
-    setPhoneNumber(e.target.value);
+    const value = e.target.value;
+    if (/^\d*$/.test(value) && value.length <= 11) {
+      setPhoneNumber(value);
+    }
   };
 
   const handleCheckboxChange = () => {
@@ -79,7 +82,7 @@ const Register = ({ logo }) => {
               کد تائید به شماره موبایلی که وارد می کنید، ارسال خواهد شد.
             </p>
             <input
-              type="number"
+              type="text"
               placeholder="شماره موبایل"
               className="border border-gray-300 rounded w-full p-2 mb-4"
               value={phoneNumber}
@@ -107,7 +110,7 @@ const Register = ({ logo }) => {
             >
               تائید و ادامه
             </button>
-          </div>
+          </div>      
         </div>
       )}
     </div>

@@ -7,13 +7,7 @@ const FullHeader = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname == "/us" ? (
-        <>
-          <div className="relative ">
-            <Topbar />
-          </div>
-        </>
-      ) : (
+      {location.pathname == "/" && "filter" ? (
         <div className="static md:relative md:pb-14">
           <div className="relative">
             <Topbar />
@@ -21,6 +15,10 @@ const FullHeader = () => {
           <div className="m-auto static md:absolute top-100 left-0 right-0 bottom-1">
             <InputsFlightFilter />
           </div>
+        </div>
+      ) : (
+        <div className="relative ">
+          <Topbar />
         </div>
       )}
     </>

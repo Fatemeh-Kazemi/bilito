@@ -2,7 +2,6 @@ import logo from "../../assets/images/LOGO.svg";
 
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,7 +9,11 @@ import Register from "./RegisterModal";
 import Loading from "../main/Loading";
 
 const Topbar = () => {
+  const [isOpenItem, setIsOpenItem] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const {
     isPending,
@@ -29,7 +32,88 @@ const Topbar = () => {
 
   return (
     <>
-      <header>
+      {/* موبایل */}
+      <div className="md:hidden w-full">
+        <div className="flex justify-between items-center p-4">
+          <button onClick={toggleMenu}>
+            {/* Hamburger Icon */}
+            <svg
+              className="w-10 h-10"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+          <img src={logo} className="w-full*" alt="Bilito Logo" />
+        </div>
+        {isOpen && (
+          <ul className="flex flex-col p-4 text-right gap-2">
+            {headerMenu.map((item) =>
+              item.children.length < 1 ? (
+                <li>
+                  <Link
+                    to={item.to}
+                    className="rounded md:bg-transparent md:p-0 md:hover:text-primary"
+                    aria-current="page"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <div>
+                    <ul className="list-none">
+                      <li
+                        className="cursor-pointer"
+                        onMouseEnter={() => setIsOpenItem(true)}
+                        onMouseLeave={() => setIsOpenItem(false)}
+                      >
+                        <a href={item.to} className="md:hover:text-primary">
+                          {item.title}
+                        </a>
+                        <svg
+                          className="inline w-5 h-5 transform transition-transform duration-200"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15l-3-3h6l-3 3z"
+                          />
+                        </svg>
+                        {isOpenItem && (
+                          <ul>
+                            {item.children.map((inItem) => (
+                              <li className="m-2">
+                                <Link to={inItem.to}>{inItem.title}</Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              )
+            )}
+
+            <button className="bg-blue-500 px-4 py-2 rounded">ثبت نام</button>
+          </ul>
+        )}
+      </div>
+      {/* دسکتاپ */}
+      <header className="hidden md:block">
         <div className="hidden md:block">
           <nav className="sticky bg-white w-full z-20 top-0 start-0">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -56,8 +140,8 @@ const Topbar = () => {
                           <ul className="list-none">
                             <li
                               className="cursor-pointer"
-                              onMouseEnter={() => setIsOpen(true)}
-                              onMouseLeave={() => setIsOpen(false)}
+                              onMouseEnter={() => setIsOpenItem(true)}
+                              onMouseLeave={() => setIsOpenItem(false)}
                             >
                               <a
                                 href={item.to}
@@ -79,7 +163,7 @@ const Topbar = () => {
                                   d="M12 15l-3-3h6l-3 3z"
                                 />
                               </svg>
-                              {isOpen && (
+                              {isOpenItem && (
                                 <ul className="absolute right-0 w-48 bg-white shadow-lg">
                                   {item.children.map((inItem) => (
                                     <li className="p-2 hover:bg-blue-100">
@@ -123,7 +207,6 @@ const Topbar = () => {
                   aria-controls="navbar-sticky"
                   aria-expanded="false"
                 >
-                  <span className="sr-only">Open main headerMenu</span>
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"

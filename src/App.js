@@ -43,9 +43,9 @@ function App() {
             }
           />
             <Route path="us" element={<Us />} />
-            <Route path="/filter" element={<FullFilterPage />} />
-            <Route path="/steps" element={<StepforBuying />} />
-            <Route path="/flight/:flightId" element={<FlightDetails />} />
+            <Route path="filter" element={<FullFilterPage />} />
+            <Route path="steps" element={<StepforBuying />} />
+            <Route path="flight/:flightId" element={<FlightDetails />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

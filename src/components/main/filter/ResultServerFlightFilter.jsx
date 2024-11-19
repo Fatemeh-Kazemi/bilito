@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ModalDetailsFlight from "./ModalDetailsFlight";
+import {Link} from "react-router-dom";
 
 const ResultServerFlightFilter = ({ results }) => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -503,9 +504,10 @@ const ResultServerFlightFilter = ({ results }) => {
                 alt="No results found"
                 className="w-full"
               />
-              <p className="p-4 border rounded-md border-gray-5">
+              <p className="p-4 mb-4 border rounded-md border-gray-5">
                 نتیجه ای یافت نشد
               </p>
+              <Link to="/" className="font-bold text-blue-600">بازگشت به صفحه اصلی</Link>
             </div>
           </div>
         )}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+  import { useState, useEffect } from "react";
 import ModalDetailsFlight from "./ModalDetailsFlight";
 import {Link} from "react-router-dom";
 
@@ -43,6 +43,41 @@ const ResultServerFlightFilter = ({ results }) => {
     setAirports([]);
     setFlightType([]);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (priceRange[0] !== 0 || priceRange[1] !== 1000) {
+      params.append('priceRange', priceRange.join(','));
+    }
+    if (departureTime[0] !== 0 || departureTime[1] !== 24) {
+      params.append('departureTime', departureTime.join(','));
+    }
+    if (airlines.length > 0) {
+      params.append('airlines', airlines.join(','));
+    }
+    if (stops) {
+      params.append('stops', stops);
+    }
+    if (airports.length > 0) {
+      params.append('airports', airports.join(','));
+    }
+    if (flightType.length > 0) {
+      params.append('flightType', flightType.join(','));
+    }
+    console.log(params)
+    
+    const queryString = params.toString();
+    console.log(queryString)
+    if (queryString) {
+      fetch(`/api/filtered?${queryString}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      });
+    }
+  }, [priceRange, departureTime, airlines, stops, airports, flightType]);
+  
+
 
   return (
     <div className="container mx-auto flex flex-col md:flex-row items-start gap-5 p-10 m-5 font-normal">

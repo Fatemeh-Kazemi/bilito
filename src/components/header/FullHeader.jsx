@@ -7,7 +7,7 @@ const FullHeader = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname == "/" && "filter" ? (
+      {['/', '/filter'].includes(location.pathname) ? (
         <div className="static md:relative md:pb-14">
           <div className="relative">
             <Topbar />

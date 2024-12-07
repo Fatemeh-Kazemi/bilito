@@ -9,9 +9,6 @@ import "./App.css";
 
 import routes from "./routes.jsx";
 
-import FullHeader from "./components/header/FullHeader.jsx";
-import Footer from "./components/footer/Footer";
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -19,9 +16,8 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <FullHeader />
+       
         {element}
-        <Footer />
       </QueryClientProvider>
     </div>
   );

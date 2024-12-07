@@ -26,7 +26,7 @@ const Banners = () => {
 
   return (
     <>
-      <style>{` .swiper-slide {justify-content: center;}`}</style>
+      <style>{` .swiper-slide {display:flex; justify-content: center;}`}</style>
       <div className="w-[100%] flex">
         <Swiper
           modules={[Virtual]}

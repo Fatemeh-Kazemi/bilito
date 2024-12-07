@@ -39,10 +39,18 @@ const FlightFilter = () => {
         `?from=${data.from}&to=${data.to}&date=${formattedDate}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
       );*/
       reset();
+      const q = Object.entries({
+        from: data.from,
+        to: data.to,
+        date: dateToSend,
+        passengerCount: data.passengerCount,
+        flightClass: data.flightClass,
+      })
+        .filter(([_, value]) => Boolean(value))
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
 
-      navigate(
-        `filter?from=${data.from}&to=${data.to}&date=${dateToSend}&passengerCount=${data.passengerCount}&flightClass=${data.flightClass}`
-      );
+      navigate(`filter?${q}`);
     } else {
       alert("لطفاً حداقل یک فیلد را پر کنید.");
       return;

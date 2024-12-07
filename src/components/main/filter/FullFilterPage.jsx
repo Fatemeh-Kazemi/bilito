@@ -14,6 +14,18 @@ const FullFilterPage = () => {
   const date = searchParams.get("date");
   const passengerCount = searchParams.get("passengerCount");
   const flightClass = searchParams.get("flightClass");
+  
+  let obj = {}
+    searchParams
+      .toString()
+      .split("&")
+      .map((item) => {
+        const [key, value] = item.split("=");
+         return { [key]: decodeURIComponent(value) };
+      }).forEach(item => {
+        obj = {...obj, ...item}
+      })
+  console.log(obj)
 
   const {
     isPending,
@@ -22,18 +34,15 @@ const FullFilterPage = () => {
   } = useQuery({
     queryKey: ["filteredFlights"],
     queryFn: async () => {
-      const response = await axios.get(
-        `http://localhost:3001/api/flightFilter`,
-        {
-          params: {
-            from,
-            to,
-            date,
-            passengerCount,
-            flightClass,
-          },
-        }
-      );
+      const response = await axios.get(`http://localhost:3001/api/fly`, {
+        params: {
+          from,
+          to,
+          date,
+          passengerCount,
+          flightClass,
+        },
+      });
       return response.data;
     },
   });
@@ -43,7 +52,7 @@ const FullFilterPage = () => {
 
   return (
     <div>
-      <ResultServerFlightFilter results={filteredFlights}  />
+      <ResultServerFlightFilter results={filteredFlights} />
     </div>
   );
 };

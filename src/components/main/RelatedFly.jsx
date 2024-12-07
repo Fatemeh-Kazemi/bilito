@@ -8,19 +8,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 import Loading from "./Loading";
-import FlightDetails from "./filter/FlightDetails";
 import { Link } from "react-router-dom";
 
-const HighFly = () => {
+const HighFly = ({ to }) => {
   const [flights, setFlights] = useState([]);
   const [activeCity, setActiveCity] = useState("تهران"); // Set default active city
-  const [selectedFlightId, setSelectedFlightId] = useState(null);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["highFly", activeCity],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3001/api/fly?from=${activeCity}`
+        `http://localhost:3001/api/fly?to=${to}`
       );
       return response.data;
     },
@@ -32,14 +30,6 @@ const HighFly = () => {
       setFlights(data);
     }
   }, [data]);
-
-  const handleCityClick = async (city) => {
-    setActiveCity(city); // Update active city
-  };
-
-  const handleFlightClick = async (id) => {
-    setSelectedFlightId(id);
-  };
 
   if (isPending) return <Loading />;
   if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
@@ -53,23 +43,8 @@ const HighFly = () => {
 
       <div className="py-5">
         <p className="text-xl text-right font-bold mb-2">
-          پر طرفدارترین پروازهای داخلی
+          پر طرفدارترین پروازها به این مقصد
         </p>
-        <div className="flex gap-4 mb-5">
-          {["تهران", "مشهد", "شیراز", "کیش"].map((city) => (
-            <button
-              key={city}
-              onClick={() => handleCityClick(city)}
-              className={`py-1 px-4 border rounded ${
-                activeCity === city
-                  ? "bg-blue-500 text-white"
-                  : "hover:bg-blue-200 hover:text-primary"
-              }`}
-            >
-              {city}
-            </button>
-          ))}
-        </div>
 
         <div className="w-[90%] flex justify-between text-center cursor-pointer">
           <Swiper
@@ -87,12 +62,8 @@ const HighFly = () => {
               <SwiperSlide
                 key={flight.id}
                 style={{ width: "300px !important" }}
-                onClick={() => handleFlightClick(flight.id)}
               >
-                <Link
-                  to={`/flight/${flight.id}`}
-                  className="w-full flex border rounded-md overflow-hidden"
-                >
+                <Link className="w-full flex border rounded-md overflow-hidden">
                   <div style={{ width: "80px", height: "82px" }}>
                     <img
                       src={`http://localhost:3001/${flight.image}`}
@@ -129,7 +100,6 @@ const HighFly = () => {
           </Swiper>
         </div>
       </div>
-      {selectedFlightId ? <FlightDetails id={selectedFlightId} /> : null}
     </>
   );
 };

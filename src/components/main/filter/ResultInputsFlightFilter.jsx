@@ -21,7 +21,7 @@ const ResultInputsFlightFilter = () => {
     queryKey: ["filteredFlights"],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3001/api/flightFilter`,
+        `http://localhost:3001/api/fly`,
         {
           params: {
             from,
@@ -40,7 +40,7 @@ const ResultInputsFlightFilter = () => {
   if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-evenly">
       <p>
         بلیط هواپیما {from} به {to}
       </p>

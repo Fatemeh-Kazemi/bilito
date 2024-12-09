@@ -43,7 +43,7 @@ const HighFly = ({ to }) => {
 
       <div className="py-5">
         <p className="text-xl text-right font-bold mb-2">
-          پر طرفدارترین پروازها به این مقصد
+          تمام پروازها به این مقصد
         </p>
 
         <div className="w-[90%] flex justify-between text-center cursor-pointer">

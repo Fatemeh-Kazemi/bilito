@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
-import axios from "axios";
+import { useSendSms } from "../../hooks/RQ";
 
 const Register = ({ logo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [varify, setvarify] = useState(false);
+  const [verify, setVerify] = useState(false);
   const [inputs, setInputs] = useState(["", "", "", "", ""]);
   const inputRefs = useRef([]);
   const [error, setError] = useState("");
@@ -48,16 +48,18 @@ const Register = ({ logo }) => {
   const isButtonDisabled =
     !phoneNumber.startsWith("09") || !isChecked || phoneNumber.length < 11;
 
-  const cliced = async () => {
-    setvarify(true);
-
-    // Axios request to send the phone number
-    try {
-      const response = await axios.get("http://localhost:3001/api/send-email");
+  const { mutate } = useSendSms({
+    onSuccess: () => {
       setMsg("کد تائید با موفقیت ارسال شد");
-    } catch (error) {
+    },
+    onError: (error) => {
       setMsg(`خطایی در ارسال کد به وقوع پیوست ${error}`);
-    }
+    },
+  });
+
+  const cliced = async () => {
+    setVerify(true);
+    mutate();
   };
 
   return (
@@ -105,7 +107,7 @@ const Register = ({ logo }) => {
                 می کنم.
               </label>
             </div>
-            {varify ? (
+            {verify ? (
               <>
                 <p className="tetx-xl font-bold">کد تائید را وارد کنید</p>
                 <div className="flex mb-4 gap-3" dir="ltr">
@@ -125,7 +127,7 @@ const Register = ({ logo }) => {
             ) : null}
             <p className="text-right font-bold">{msg}</p>
 
-            {varify ? (
+            {verify ? (
               <button
                 className={`bg-primary text-white px-4 py-2 rounded w-full `}
               >

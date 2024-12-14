@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 
 import { Virtual } from "swiper/modules";
@@ -7,25 +5,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
-import Loading from "./Loading";
 import FlightDetails from "./filter/FlightDetails";
 import { Link } from "react-router-dom";
+import { useHighFly } from "../../hooks/RQ";
+import Handler from "../handler/Handler";
+
+const CITIES = ["تهران", "مشهد", "شیراز", "کیش"];
 
 const HighFly = () => {
   const [flights, setFlights] = useState([]);
-  const [activeCity, setActiveCity] = useState("تهران"); // Set default active city
+  const [activeCity, setActiveCity] = useState(CITIES[0]); // Set default active city
   const [selectedFlightId, setSelectedFlightId] = useState(null);
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["highFly", activeCity],
-    queryFn: async () => {
-      const response = await axios.get(
-        `http://localhost:3001/api/fly?from=${activeCity}`
-      );
-      return response.data;
-    },
-    enabled: !!activeCity,
-  });
+  const { isPending, error, data } = useHighFly(activeCity);
 
   useEffect(() => {
     if (data) {
@@ -41,11 +33,8 @@ const HighFly = () => {
     setSelectedFlightId(id);
   };
 
-  if (isPending) return <Loading />;
-  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
-
   return (
-    <>
+    <Handler isPending={isPending} error={error}>
       <style>{`
        .swiper-slide { display:flex; }
         `}</style>
@@ -56,7 +45,7 @@ const HighFly = () => {
           پر طرفدارترین پروازهای داخلی
         </p>
         <div className="flex gap-4 mb-5">
-          {["تهران", "مشهد", "شیراز", "کیش"].map((city) => (
+          {CITIES.map((city) => (
             <button
               key={city}
               onClick={() => handleCityClick(city)}
@@ -129,8 +118,8 @@ const HighFly = () => {
           </Swiper>
         </div>
       </div>
-      {selectedFlightId ? <FlightDetails id={selectedFlightId} /> : null}
-    </>
+      {selectedFlightId && <FlightDetails id={selectedFlightId} />}
+    </Handler>
   );
 };
 

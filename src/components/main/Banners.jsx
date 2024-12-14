@@ -1,31 +1,17 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/virtual";
 
-import Loading from "./Loading";
+import { useBanners } from "../../hooks/RQ/useBanners";
+import Handler from "../handler/Handler";
 
 const Banners = () => {
-  const {
-    isPending,
-    error,
-    data: banners,
-  } = useQuery({
-    queryKey: ["banners"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/banners");
-      return response.data.results;
-    },
-  });
-
-  if (isPending) return <Loading />;
-  if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
+  const { isPending, error, data: banners } = useBanners();
 
   return (
-    <>
+    <Handler isPending={isPending} error={error}>
       <style>{` .swiper-slide {display:flex; justify-content: center;}`}</style>
       <div className="w-[100%] flex">
         <Swiper
@@ -77,7 +63,7 @@ const Banners = () => {
           </SwiperSlide>
         </Swiper>
       </div>
-    </>
+    </Handler>
   );
 };
 

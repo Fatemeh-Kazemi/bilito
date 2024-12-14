@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 
 import Register from "./RegisterModal";
 import Loading from "../main/Loading";
+import { useHeaderMenu } from "../../hooks/RQ";
+import Handler from "../handler/Handler";
 
 const Topbar = () => {
   const [isOpenItem, setIsOpenItem] = useState(false);
@@ -15,23 +17,13 @@ const Topbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const {
-    isPending,
-    error,
-    data: headerMenu,
-  } = useQuery({
-    queryKey: ["headerMenu"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/api/headerMenu");
-      return response.data.results;
-    },
-  });
+  const { isPending, error, data: headerMenu } = useHeaderMenu();
 
   if (isPending) return <Loading />;
   if (error) return "خطایی در بارگذاری داده ها رخ داد ..." + error.message;
 
   return (
-    <>
+    <Handler isPending={isPending} error={error}>
       {/* موبایل */}
       <div className="md:hidden w-full">
         <div className="flex justify-between items-center p-4">
@@ -267,7 +259,7 @@ const Topbar = () => {
           />
         </div>
       </header>
-    </>
+    </Handler>
   );
 };
 

@@ -8,7 +8,7 @@ const Benefits = () => {
     <Handler isPending={isPending} error={error}>
       <div className="bg-blue-100">
         <div className="container mx-auto flex justify-center md:gap-32 p-6">
-          {benefits.map((reason) => (
+          {benefits?.map?.((reason) => (
             <div className="flex flex-col items-center" key={reason.id}>
               <div className="size-[40px] md:size-[80px] p-2 flex justify-center items-center bg-white border border-primary rounded-lg md:rounded-2xl">
                 <img

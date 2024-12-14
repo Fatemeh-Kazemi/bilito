@@ -35,7 +35,7 @@ const Footer = () => {
                 alt="Website Logo"
                 className="h-8 hidden md:block"
               />
-              {footerContact.slice(0, 2).map((item) => (
+              {footerContact?.slice?.(0, 2).map((item) => (
                 <p className="text-md leading-10">
                   {item.description} : {item.data}
                 </p>
@@ -49,7 +49,7 @@ const Footer = () => {
             <div className="col-span-1 md:col-span-2 md:order-4">
               <h3 className="text-lg font-bold">لینک های مفید</h3>
               <ul className="list-none space-y-2">
-                {data.footerMenu.map((item, index) => (
+                {data?.footerMenu?.map((item, index) => (
                   <li key={index} className="hover:text-primary">
                     <a href={item.link}>{item.title}</a>
                   </li>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 mt-4">
             <div className="md:order-2 flex justify-center md:justify-end items-center gap-4">
-              {data.trustLinks.map((eachItem) => (
+              {data?.trustLinks?.map?.((eachItem) => (
                 <img
                   src={`http://localhost:3001/${eachItem.img}`}
                   alt={eachItem.alt}
@@ -84,7 +84,7 @@ const Footer = () => {
             </div>
             <div className="md:order-1 flex items-center flex-col text-right pr-10 gap-2">
               <ul className="flex list-none gap-4">
-                {data.socialLinks.map((eachItem) => (
+                {data?.socialLinks?.map?.((eachItem) => (
                   <li>
                     <a href="#">
                       <img
@@ -96,7 +96,7 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-              {footerContact.slice(2, 3).map((item) => (
+              {footerContact?.slice(2, 3)?.map((item) => (
                 <a href="" className="text-primary font-bold">
                   {item.description} : {item.data}
                 </a>

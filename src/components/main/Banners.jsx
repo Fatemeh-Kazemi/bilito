@@ -25,7 +25,7 @@ const Banners = () => {
           }}
           virtual
         >
-          {banners.slice(0, 2).map((banner) => (
+          {banners?.slice?.(0, 2).map((banner) => (
             <SwiperSlide className="relative">
               <img
                 src={`http://localhost:3001/${banner.img}`}
@@ -43,7 +43,7 @@ const Banners = () => {
             </SwiperSlide>
           ))}
           <SwiperSlide className="flex flex-col !justify-between">
-            {banners.slice(2, 4).map((banner) => (
+            {banners?.slice?.(2, 4).map((banner) => (
               <div className="flex flex-col relative">
                 <img
                   src={`http://localhost:3001/${banner.img}`}

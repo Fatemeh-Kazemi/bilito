@@ -18,7 +18,7 @@ const Accordion = () => {
           سوالات متداول
         </p>
         <div className="w-full border">
-          {questions.map((x, index) => (
+          {questions?.map?.((x, index) => (
             <div key={index} className="border-b border-gray-200">
               <button
                 className="flex justify-between items-center w-full p-4 text-left text-gray-700 bg-white hover:bg-gray-100 focus:outline-none"

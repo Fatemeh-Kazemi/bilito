@@ -72,7 +72,7 @@ const HighFly = () => {
             }}
             virtual
           >
-            {flights.map((flight) => (
+            {flights?.map?.((flight) => (
               <SwiperSlide
                 key={flight.id}
                 style={{ width: "300px !important" }}
